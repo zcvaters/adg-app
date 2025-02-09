@@ -1,0 +1,30 @@
+---
+// Instagram Feed Component
+const INSTAGRAM_ACCOUNT = 'avalondiscgolfers';
+---
+
+<div class="instagram-feed w-full">
+    <div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto">
+        <iframe
+            class="instagram-embed"
+            src="https://www.instagram.com/avalondiscgolfers/embed"
+            width="100%"
+            height="750"
+            frameborder="0"
+            scrolling="no"
+            allowtransparency="true"
+        ></iframe>
+    </div>
+</div>
+
+<style>
+    .instagram-feed {
+        margin: 2rem 0;
+    }
+    
+    .instagram-embed {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);
+    }
+</style> 
