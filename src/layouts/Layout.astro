@@ -17,6 +17,8 @@ const {
 	image = "/adg-logo.jpg",
 	canonicalURL = Astro.url.href,
 } = Astro.props;
+
+const fullTitle = `${title} | Avalon Disc Golfers`;
 ---
 
 <!DOCTYPE html>
@@ -25,13 +27,16 @@ const {
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/favicon.png" />
+		<title>{fullTitle}</title>
 		<SEO
-			title={title}
+			title={fullTitle}
 			description={description}
 			canonical={canonicalURL}
 			openGraph={{
 				basic: {
-					title,
+					title: fullTitle,
 					type: "website",
 					image,
 					url: canonicalURL,
@@ -46,12 +51,11 @@ const {
 			}}
 			twitter={{
 				card: "summary_large_image",
-				title,
+				title: fullTitle,
 				description,
 				image,
 			}}
 		/>
-		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
