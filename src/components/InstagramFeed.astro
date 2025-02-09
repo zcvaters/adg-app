@@ -3,15 +3,16 @@
 const INSTAGRAM_ACCOUNT = 'avalondiscgolfers';
 ---
 
-<div class="instagram-feed w-full">
+<div class="instagram-feed w-full px-4">
     <div class="grid grid-cols-1 gap-6 max-w-5xl mx-auto">
-        <iframe 
-            width="100%" 
-            height="750" 
-            src="https://www.instagram.com/avalondiscgolfers/embed/" 
-            frameborder="0"
-            class="instagram-embed"
-        ></iframe>
+        <div class="instagram-embed-container">
+            <iframe 
+                src="https://www.instagram.com/avalondiscgolfers/embed/" 
+                frameborder="0"
+                class="instagram-embed"
+                loading="lazy"
+            ></iframe>
+        </div>
     </div>
 </div>
 
@@ -20,10 +21,28 @@ const INSTAGRAM_ACCOUNT = 'avalondiscgolfers';
         margin: 3rem 0;
     }
     
+    .instagram-embed-container {
+        position: relative;
+        padding-bottom: 120%; /* Aspect ratio */
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+    }
+    
     .instagram-embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: white;
         border-radius: 8px;
         box-shadow: 0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);
-        min-width: 320px;
+    }
+
+    @media (min-width: 768px) {
+        .instagram-embed-container {
+            padding-bottom: 100%;
+        }
     }
 </style> 
