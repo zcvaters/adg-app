@@ -2,16 +2,16 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-white shadow-md mt-16 relative overflow-hidden">
+<footer class="bg-primary-50 border-t border-primary-100 mt-16 relative overflow-hidden">
     <!-- Decorative disc golf elements -->
     <div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-5">
-        <svg class="w-48 h-48" viewBox="0 0 24 24" fill="currentColor">
+        <svg class="w-48 h-48 text-primary-500" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
             <circle cx="12" cy="12" r="3"/>
         </svg>
     </div>
     <div class="absolute bottom-0 left-0 transform -translate-x-1/2 translate-y-1/2 opacity-5">
-        <svg class="w-32 h-32" viewBox="0 0 24 24" fill="currentColor">
+        <svg class="w-32 h-32 text-primary-500" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
             <circle cx="12" cy="12" r="3"/>
         </svg>
@@ -20,7 +20,7 @@ const currentYear = new Date().getFullYear();
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 relative">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <h3 class="text-lg font-semibold text-primary-600 mb-4 flex items-center">
                     <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
                     </svg>
@@ -28,7 +28,7 @@ const currentYear = new Date().getFullYear();
                 </h3>
                 <ul class="space-y-2">
                     <li>
-                        <a href="/contact" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <a href="/contact" class="text-primary-700 hover:text-secondary-500 transition-colors flex items-center">
                             <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                             </svg>
@@ -36,7 +36,7 @@ const currentYear = new Date().getFullYear();
                         </a>
                     </li>
                     <li>
-                        <a href="mailto:info@avalondiscgolfers.ca" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <a href="mailto:info@avalondiscgolfers.ca" class="text-primary-700 hover:text-secondary-500 transition-colors flex items-center">
                             <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
                             </svg>
@@ -47,7 +47,7 @@ const currentYear = new Date().getFullYear();
             </div>
             
             <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <h3 class="text-lg font-semibold text-primary-600 mb-4 flex items-center">
                     <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
                     </svg>
@@ -55,7 +55,7 @@ const currentYear = new Date().getFullYear();
                 </h3>
                 <ul class="space-y-2">
                     <li>
-                        <a href="/board" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <a href="/board" class="text-primary-700 hover:text-secondary-500 transition-colors flex items-center">
                             <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
                             </svg>
@@ -63,7 +63,7 @@ const currentYear = new Date().getFullYear();
                         </a>
                     </li>
                     <li>
-                        <a href="/events" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                        <a href="/events" class="text-primary-700 hover:text-secondary-500 transition-colors flex items-center">
                             <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM9 14H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/>
                             </svg>
@@ -74,7 +74,7 @@ const currentYear = new Date().getFullYear();
             </div>
             
             <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <h3 class="text-lg font-semibold text-primary-600 mb-4 flex items-center">
                     <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
                     </svg>
@@ -83,7 +83,7 @@ const currentYear = new Date().getFullYear();
                 <div class="flex space-x-4">
                     <a 
                         href="https://www.facebook.com/groups/1705263463278631"
-                        class="text-gray-600 hover:text-blue-600 transition-colors"
+                        class="text-primary-600 hover:text-secondary-500 transition-colors"
                         aria-label="Facebook"
                     >
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -92,7 +92,7 @@ const currentYear = new Date().getFullYear();
                     </a>
                     <a 
                         href="https://www.instagram.com/avalondiscgolfers"
-                        class="text-gray-600 hover:text-blue-600 transition-colors"
+                        class="text-primary-600 hover:text-secondary-500 transition-colors"
                         aria-label="Instagram"
                     >
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -103,8 +103,8 @@ const currentYear = new Date().getFullYear();
             </div>
         </div>
         
-        <div class="mt-8 pt-8 border-t border-gray-200">
-            <p class="text-center text-gray-500 text-sm flex items-center justify-center">
+        <div class="mt-8 pt-8 border-t border-primary-200">
+            <p class="text-center text-primary-600 text-sm flex items-center justify-center">
                 <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
                     <circle cx="12" cy="12" r="3"/>

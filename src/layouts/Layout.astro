@@ -20,7 +20,7 @@ const {
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-primary-50">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -56,9 +56,9 @@ const {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 	</head>
-	<body class="min-h-screen flex flex-col">
+	<body class="min-h-screen flex flex-col bg-white text-primary-800">
 		<Navigation />
-		<main class="flex-grow">
+		<main class="flex-grow container mx-auto px-4 py-8">
 			<slot />
 		</main>
 		<Footer />
@@ -67,16 +67,14 @@ const {
 
 <style is:global>
 	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
+		--primary-50: #E6EEF7;
+		--primary-500: #002868;
+		--secondary-500: #C41E3A;
+		--accent-500: #FFB612;
 	}
 	
 	html {
 		font-family: 'Inter', system-ui, -apple-system, sans-serif;
-		background: #f6f6f6;
-		background-size: 224px;
 	}
 
 	main {
@@ -85,8 +83,40 @@ const {
 		padding: 1rem;
 	}
 
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
+	::selection {
+		background-color: var(--accent-500);
+		color: var(--primary-500);
+	}
+
+	h1 {
+		@apply text-4xl font-bold text-primary-600 mb-6;
+	}
+
+	h2 {
+		@apply text-3xl font-semibold text-primary-600 mb-4;
+	}
+
+	h3 {
+		@apply text-2xl font-semibold text-primary-600 mb-3;
+	}
+
+	p {
+		@apply text-primary-800 mb-4 leading-relaxed;
+	}
+
+	a:not([class]) {
+		@apply text-secondary-500 hover:text-secondary-600 underline;
+	}
+
+	button, .button {
+		@apply bg-primary-500 text-white px-6 py-2 rounded-lg hover:bg-primary-600 transition-colors;
+	}
+
+	button.secondary, .button.secondary {
+		@apply bg-secondary-500 hover:bg-secondary-600;
+	}
+
+	button.accent, .button.accent {
+		@apply bg-accent-500 text-primary-800 hover:bg-accent-600;
 	}
 </style> 
