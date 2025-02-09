@@ -1,6 +1,7 @@
 ---
 import type { Course } from '../types/course';
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
 
 const courses = [
     {
@@ -47,6 +48,17 @@ const courses = [
                 <circle cx="12" cy="12" r="3"/>
             </svg>
         </div>
+        <!-- NL Flag decorative element -->
+        <div class="absolute top-4 left-4 opacity-10">
+            <Image 
+                src="/nl-flag.png" 
+                alt="Newfoundland and Labrador Flag" 
+                width={96}
+                height={64}
+                class="w-24 h-16" 
+                loading="eager"
+            />
+        </div>
         <h1 class="text-5xl font-bold text-blue-600 mb-4">Local Disc Golf Courses</h1>
         <p class="text-xl text-gray-700 max-w-2xl mx-auto">
             Explore the local disc golf courses on the Avalon Peninsula. Each course offers unique challenges and experiences for players of all skill levels.
@@ -59,9 +71,11 @@ const courses = [
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="aspect-video relative">
-                            <img 
-                                src={course.image} 
+                            <Image 
+                                src={course.image}
                                 alt={`${course.name} course`}
+                                width={800}
+                                height={450}
                                 class="absolute inset-0 w-full h-full object-cover"
                             />
                         </div>
