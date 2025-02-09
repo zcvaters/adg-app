@@ -1,24 +1,57 @@
 ---
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { SEO } from 'astro-seo';
 import '../styles/global.css';
 
 interface Props {
 	title: string;
+	description?: string;
+	image?: string;
+	canonicalURL?: string;
 }
 
-const { title } = Astro.props;
+const { 
+	title,
+	description = "Avalon Disc Golfers - Growing the sport of disc golf in the Avalon Peninsula",
+	image = "/adg-logo.jpg",
+	canonicalURL = Astro.url.href,
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="ADG Site">
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<SEO
+			title={title}
+			description={description}
+			canonical={canonicalURL}
+			openGraph={{
+				basic: {
+					title,
+					type: "website",
+					image,
+					url: canonicalURL,
+				},
+				image: {
+					alt: "Avalon Disc Golfers Logo",
+				},
+				optional: {
+					description,
+					siteName: "Avalon Disc Golfers",
+				},
+			}}
+			twitter={{
+				card: "summary_large_image",
+				title,
+				description,
+				image,
+			}}
+		/>
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
 	</head>
 	<body class="min-h-screen flex flex-col">
 		<Navigation />
