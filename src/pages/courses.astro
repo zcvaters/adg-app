@@ -1,0 +1,104 @@
+---
+import type { Course } from '../types/course';
+import Layout from '../layouts/Layout.astro';
+
+const courses = [
+    {
+        name: "McNiven Disc Golf Course",
+        description: "A scenic 18-hole course located in St. John's, developed in 2024. Perfect for both beginners and experienced players. The course features a mix of open and wooded holes, offering a variety of challenging shots.",
+        udiscLink: "https://udisc.com/courses/mc-niven-disc-golf-park-7yOe",
+        image: "/mcniven-course.jpg",
+        features: [
+            "18 holes",
+            "Beginner friendly",
+            "Parking available",
+            "Mixed terrain",
+            "Practice basket",
+            "Tee pads"
+        ]
+    },
+    {
+        name: "Confederation Hill Disc Golf Course",
+        description: "An exciting 9-hole course offering stunning views of St. John's. This challenging course features elevation changes and technical shots that will test players of all skill levels.",
+        udiscLink: "https://udisc.com/courses/confederation-hill-dgc-7O6J",
+        image: "/confederation-course.jpg",
+        features: [
+            "Scenic views",
+            "Beginner friendly",
+            "Practice basket",
+            "Tee pads"
+        ]
+    }
+] satisfies Course[];
+---
+
+<Layout title="Local Courses | Avalon Disc Golfers">
+    <div class="relative text-center mb-12 py-16 bg-gradient-to-b from-blue-50 to-white rounded-lg overflow-hidden">
+        <!-- Decorative disc golf elements -->
+        <div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-5">
+            <svg class="w-96 h-96" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+        </div>
+        <div class="absolute bottom-0 left-0 transform -translate-x-1/2 translate-y-1/2 opacity-5">
+            <svg class="w-72 h-72" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+        </div>
+        <h1 class="text-5xl font-bold text-blue-600 mb-4">Local Disc Golf Courses</h1>
+        <p class="text-xl text-gray-700 max-w-2xl mx-auto">
+            Explore the local disc golf courses on the Avalon Peninsula. Each course offers unique challenges and experiences for players of all skill levels.
+        </p>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="space-y-12">
+            {courses.map((course) => (
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="aspect-video relative">
+                            <img 
+                                src={course.image} 
+                                alt={`${course.name} course`}
+                                class="absolute inset-0 w-full h-full object-cover"
+                            />
+                        </div>
+                        <div class="p-6">
+                            <h2 class="text-2xl font-bold mb-4">{course.name}</h2>
+                            <p class="text-gray-600 mb-6">{course.description}</p>
+                            
+                            <div class="mb-6">
+                                <h3 class="font-semibold mb-3">Course Features:</h3>
+                                <ul class="grid grid-cols-2 gap-2">
+                                    {course.features.map((feature) => (
+                                        <li class="flex items-center text-gray-600">
+                                            <svg class="w-4 h-4 mr-2 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                            </svg>
+                                            {feature}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <a 
+                                href={course.udiscLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+                            >
+                                <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                View on UDisc
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</Layout> 
