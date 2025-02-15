@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { boardMembers } from '../data/board';
+import { Image } from 'astro:assets';
 ---
 
 <Layout title="Board - Avalon Disc Golfers">
@@ -35,10 +36,13 @@ import { boardMembers } from '../data/board';
                     </div>
                     <div class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-4 bg-gray-100 rounded-full overflow-hidden">
                         {member.imageUrl && (
-                            <img 
+                            <Image
                                 src={member.imageUrl} 
                                 alt={member.name} 
                                 class="w-full h-full object-cover"
+                                width={160}
+                                height={160}
+                                loading="eager"
                             />
                         )}
                     </div>
