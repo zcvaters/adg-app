@@ -9,6 +9,7 @@ interface Event {
     registrationUrl?: string;
     description: string;
     featured?: boolean;
+    posterImage?: string;
 }
 
 export const upcomingEvents: Event[] = [
@@ -22,7 +23,8 @@ export const upcomingEvents: Event[] = [
         location: "McNiven DiscGolfPark, St. John's",
         registrationUrl: "https://www.discgolfscene.com/tournaments/St_Johns_ChillFest_Ice_Bowl_2025",
         description: "Join us for St. John's first Ice Bowl! This charity event supports The Gathering Place while promoting disc golf in our community. Your registration includes a 2025 DGNL Membership with bag tag, 2025 ADG membership with custom wood mini, and a disc.",
-        featured: true
+        featured: true,
+        posterImage: "/events/ice-bowl-poster-2025.jpg"
     }
 ];
 
