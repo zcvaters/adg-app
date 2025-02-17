@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import EventCard from '../components/EventCard.astro';
+import EventPhotoGallery from '../components/EventPhotoGallery.astro';
 import { upcomingEvents, pastEvents } from '../data/events';
 
 const upcoming = upcomingEvents();
@@ -49,6 +50,8 @@ const past = pastEvents();
             </div>
         </section>
     ) : null}
+
+    <EventPhotoGallery />
 
     <div class="grid md:grid-cols-2 gap-8 mb-12">
         <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden">

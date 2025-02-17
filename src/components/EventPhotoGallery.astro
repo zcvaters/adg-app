@@ -1,0 +1,85 @@
+---
+import type { EventMedia } from '../data/eventPhotos';
+import { getAllEventMedia } from '../data/eventPhotos';
+
+const media: EventMedia[] = getAllEventMedia();
+---
+
+<section class="event-photo-gallery">
+    <div class="media-grid">
+        {media.map((item: EventMedia) => (
+            <div class="media-card">
+                {item.type === 'image' ? (
+                    <img 
+                        src={item.url} 
+                        alt={item.altText}
+                        loading="lazy"
+                    />
+                ) : (
+                    <video 
+                        src={item.url}
+                        controls
+                        preload="none"
+                        poster={item.url + '?poster'}
+                    >
+                        <track kind="captions" />
+                    </video>
+                )}
+            </div>
+        ))}
+    </div>
+</section>
+
+<style>
+    .event-photo-gallery {
+        padding: 2rem 1rem;
+        background: var(--bg-primary);
+    }
+
+    .media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .media-card {
+        aspect-ratio: 4/3;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        background: #000;
+    }
+
+    .media-card:hover {
+        transform: scale(1.02);
+    }
+
+    .media-card img, .media-card video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .media-card:hover img {
+        transform: scale(1.1);
+    }
+
+    .media-card video {
+        background: #000;
+    }
+
+    .media-card video::-webkit-media-controls-panel {
+        background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+    }
+
+    @media (max-width: 768px) {
+        .media-grid {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 0.75rem;
+        }
+    }
+</style> 
