@@ -1,7 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import EventCard from '../components/EventCard.astro';
-import { upcomingEvents } from '../data/events';
+import { upcomingEvents, pastEvents } from '../data/events';
+
+const upcoming = upcomingEvents();
+const past = pastEvents();
 ---
 
 <Layout title="Events - Avalon Disc Golfers">
@@ -25,11 +28,22 @@ import { upcomingEvents } from '../data/events';
         </p>
     </div>
 
-    {upcomingEvents.length > 0 ? (
+    {upcoming.length > 0 ? (
         <section class="mb-12">
             <h2 class="text-3xl font-bold text-primary-700 mb-6 text-center">Upcoming Events</h2>
             <div class="space-y-8">
-                {upcomingEvents.map(event => (
+                {upcoming.map(event => (
+                    <EventCard {...event} />
+                ))}
+            </div>
+        </section>
+    ) : null}
+
+    {past.length > 0 ? (
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-primary-700 mb-6 text-center">Past Events</h2>
+            <div class="space-y-8">
+                {past.map(event => (
                     <EventCard {...event} />
                 ))}
             </div>
