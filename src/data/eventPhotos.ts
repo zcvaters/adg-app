@@ -250,16 +250,6 @@ const eventMedia: EventMedia[] = [
         }
     },
     {
-        url: "/events/ice-bowl-2025/PXL_20250216_164405240.jpg",
-        type: "image",
-        altText: "Ice Bowl action shot",
-        event: {
-            id: "ice-bowl-2025",
-            name: "St. John's ChillFest Ice Bowl 2025",
-            date: new Date(2025, MONTHS.FEB, 16)
-        }
-    },
-    {
         url: "/events/ice-bowl-2025/PXL_20250216_170819783.jpg",
         type: "image",
         altText: "Ice Bowl action shot",
