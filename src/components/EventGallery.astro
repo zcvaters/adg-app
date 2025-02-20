@@ -1,0 +1,134 @@
+---
+import { Image } from 'astro:assets';
+import type { EventMedia } from '../data/eventPhotos';
+
+interface Props {
+    media: EventMedia[];
+    eventName: string;
+}
+
+const { media, eventName } = Astro.props;
+
+// Separate images and videos
+const images = media.filter((item: EventMedia) => item.type === 'image');
+const videos = media.filter((item: EventMedia) => item.type === 'video');
+---
+
+<div class="event-gallery">
+    <h2 class="text-3xl font-bold text-primary-700 mb-6">{eventName}</h2>
+    
+    {videos.length > 0 && (
+        <div class="mb-8">
+            <h3 class="text-xl font-semibold text-primary-600 mb-4">Videos</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {videos.map((video: EventMedia) => (
+                    <div class="video-container relative aspect-video bg-black rounded-lg overflow-hidden shadow-lg">
+                        <video 
+                            src={video.url}
+                            controls
+                            preload="none"
+                            class="w-full h-full object-cover"
+                            poster={video.url + '?poster'}
+                        >
+                            <track kind="captions" />
+                        </video>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )}
+
+    {images.length > 0 && (
+        <div>
+            <h3 class="text-xl font-semibold text-primary-600 mb-4">Photos</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {images.map((image: EventMedia) => (
+                    <div 
+                        class="group relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                        data-image-url={image.url}
+                        data-image-alt={image.altText}
+                    >
+                        <img
+                            src={image.url}
+                            alt={image.altText}
+                            width="400"
+                            height="300"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        />
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300">
+                            <div class="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                <p class="text-sm">{image.altText}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )}
+</div>
+
+<div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 hidden z-50">
+    <button id="closeLightbox" class="absolute top-4 right-4 text-white text-4xl hover:text-primary-300 transition-colors">&times;</button>
+    <button id="prevImage" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-primary-300 transition-colors">&lt;</button>
+    <button id="nextImage" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-primary-300 transition-colors">&gt;</button>
+    <div class="flex items-center justify-center h-full">
+        <img id="lightboxImage" src="" alt="" class="max-h-[90vh] max-w-[90vw] object-contain" />
+    </div>
+</div>
+
+<script>
+    let currentImageIndex = 0;
+    const images = document.querySelectorAll<HTMLElement>('.event-gallery [data-image-url]');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage') as HTMLImageElement;
+    
+    images.forEach((image, index) => {
+        image.addEventListener('click', () => {
+            currentImageIndex = index;
+            showImage(currentImageIndex);
+            lightbox?.classList.remove('hidden');
+        });
+    });
+
+    document.getElementById('closeLightbox')?.addEventListener('click', () => {
+        lightbox?.classList.add('hidden');
+    });
+
+    document.getElementById('prevImage')?.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        showImage(currentImageIndex);
+    });
+
+    document.getElementById('nextImage')?.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        showImage(currentImageIndex);
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (lightbox?.classList.contains('hidden')) return;
+        
+        switch (e.key) {
+            case 'Escape':
+                lightbox?.classList.add('hidden');
+                break;
+            case 'ArrowLeft':
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                showImage(currentImageIndex);
+                break;
+            case 'ArrowRight':
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                showImage(currentImageIndex);
+                break;
+        }
+    });
+
+    function showImage(index: number) {
+        const imageElement = images[index];
+        const url = imageElement.dataset.imageUrl;
+        const alt = imageElement.dataset.imageAlt;
+        if (lightboxImage && url && alt) {
+            lightboxImage.src = url;
+            lightboxImage.alt = alt;
+        }
+    }
+</script> 
