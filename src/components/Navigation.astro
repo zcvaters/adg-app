@@ -52,35 +52,21 @@ import { Image } from 'astro:assets';
 </nav>
 
 <script>
-    // Handle mobile dropdown
     const eventsButton = document.getElementById('events-menu');
     const dropdown = document.getElementById('events-dropdown');
-    const dropdownItems = dropdown?.querySelectorAll('[role="menuitem"]') ?? [];
+    const dropdownItems = dropdown?.querySelectorAll('[role="menuitem"]') || [];
     let isOpen = false;
 
-    // Toggle dropdown
-    function toggleDropdown(open: boolean) {
-        isOpen = open;
+    const toggleDropdown = (force?: boolean) => {
+        isOpen = force !== undefined ? force : !isOpen;
+        dropdown?.classList.toggle('hidden', !isOpen);
         eventsButton?.setAttribute('aria-expanded', isOpen.toString());
-        if (isOpen) {
-            dropdown?.classList.remove('invisible', 'opacity-0');
-            dropdown?.classList.add('visible', 'opacity-100');
-            eventsButton?.querySelector('svg')?.classList.add('rotate-180');
-            // Focus first menu item when opening
-            (dropdownItems[0] as HTMLElement)?.focus();
-        } else {
-            dropdown?.classList.remove('visible', 'opacity-100');
-            dropdown?.classList.add('invisible', 'opacity-0');
-            eventsButton?.querySelector('svg')?.classList.remove('rotate-180');
-            // Return focus to button when closing
-            eventsButton?.focus();
-        }
-    }
+    };
 
-    // Handle button click
+    // Handle button clicks
     eventsButton?.addEventListener('click', (e) => {
-        e.preventDefault();
-        toggleDropdown(!isOpen);
+        e.stopPropagation();
+        toggleDropdown();
     });
 
     // Handle keyboard navigation
@@ -99,6 +85,7 @@ import { Image } from 'astro:assets';
             case 'Escape':
                 e.preventDefault();
                 toggleDropdown(false);
+                eventsButton?.focus();
                 break;
             case 'ArrowDown':
                 e.preventDefault();
@@ -123,13 +110,6 @@ import { Image } from 'astro:assets';
                     toggleDropdown(false);
                 }
                 break;
-        }
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!eventsButton?.contains(e.target as Node) && !dropdown?.contains(e.target as Node)) {
-            toggleDropdown(false);
         }
     });
 
