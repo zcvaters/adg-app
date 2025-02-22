@@ -46,30 +46,71 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   for (let i = 0; i < vertices.length; i += 3) {
     const x = vertices[i];
     const z = vertices[i + 2];
-    // Create rolling hills with gentler slopes for snow
-    vertices[i + 1] = 
-      Math.sin(x * 0.2) * 2 + 
-      Math.cos(z * 0.3) * 2 +
-      Math.sin((x + z) * 0.5) * 1.5 +
-      (Math.random() * 0.3); // Subtle snow drifts
     
-    // Flatten area around the basket and throw zone
-    if (Math.abs(x - 10) < 3 && Math.abs(z) < 3) {
-      vertices[i + 1] *= 0.1;
+    // Calculate distance from tee box center
+    const distanceFromTee = Math.sqrt(Math.pow(x + 10, 2) + Math.pow(z, 2));
+    
+    // Create a shoveled path from tee to basket
+    const pathWidth = 4; // Width of the shoveled path
+    const distanceFromPath = Math.abs(z); // Distance from the center line
+    const isOnPath = distanceFromPath < pathWidth / 2 && x >= -12 && x <= 12;
+    
+    // Create a wider cleared area around tee box
+    const teeBoxRadius = 3;
+    const isNearTee = distanceFromTee < teeBoxRadius;
+
+    if (isOnPath || isNearTee) {
+      // Shoveled area - flat with slight texture
+      vertices[i + 1] = Math.random() * 0.05; // Just a tiny bit of variation for texture
+    } else {
+      // Regular snow-covered terrain
+      vertices[i + 1] = 
+        Math.sin(x * 0.2) * 2 + 
+        Math.cos(z * 0.3) * 2 +
+        Math.sin((x + z) * 0.5) * 1.5 +
+        (Math.random() * 0.3); // Subtle snow drifts
     }
-    if (Math.abs(x + 10) < 3 && Math.abs(z) < 3) {
+    
+    // Flatten area around the basket
+    if (Math.abs(x - 10) < 3 && Math.abs(z) < 3) {
       vertices[i + 1] *= 0.1;
     }
   }
   groundGeometry.computeVertexNormals();
 
-  // Snow material with slight sparkle
-  const groundMaterial: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({ 
+  // Create two-tone snow material
+  const groundMaterial = new THREE.MeshPhongMaterial({ 
     color: 0xFFFFFF,
     shininess: 70,
     flatShading: true,
-    specular: 0x99CCFF
+    specular: 0x99CCFF,
+    vertexColors: true
   });
+
+  // Add vertex colors to show packed snow vs fresh snow
+  const colors = [];
+  const positions = groundGeometry.attributes.position.array;
+  for (let i = 0; i < positions.length; i += 3) {
+    const x = positions[i];
+    const z = positions[i + 2];
+    
+    // Calculate distances again for coloring
+    const distanceFromTee = Math.sqrt(Math.pow(x + 10, 2) + Math.pow(z, 2));
+    const distanceFromPath = Math.abs(z);
+    const isOnPath = distanceFromPath < 2 && x >= -12 && x <= 12;
+    const isNearTee = distanceFromTee < 3;
+
+    if (isOnPath || isNearTee) {
+      // Packed snow color (slightly darker/grayer)
+      colors.push(0.9, 0.9, 0.95); // RGB for packed snow
+    } else {
+      // Fresh snow color (pure white)
+      colors.push(1, 1, 1); // RGB for fresh snow
+    }
+  }
+
+  groundGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
   const ground: THREE.Mesh = new THREE.Mesh(groundGeometry, groundMaterial);
   ground.rotation.x = -Math.PI / 2;
   ground.receiveShadow = true;
@@ -78,67 +119,156 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   // Create tee box
   const teeBoxGroup = new THREE.Group();
   
-  // Tee pad base
+  // Tee pad base with turf-like appearance
   const teePadGeometry = new THREE.BoxGeometry(2, 0.1, 3);
   const teePadMaterial = new THREE.MeshPhongMaterial({
-    color: 0xCCCCCC,
-    shininess: 30,
+    color: 0x3B7A57, // Forest green
+    shininess: 5, // Less shiny for a matte turf look
     flatShading: true
   });
+
+  // Create turf texture pattern
+  const turfTextureCanvas = document.createElement('canvas');
+  turfTextureCanvas.width = 128;
+  turfTextureCanvas.height = 128;
+  const turfCtx = turfTextureCanvas.getContext('2d');
+  if (turfCtx) {
+    turfCtx.fillStyle = '#3B7A57';
+    turfCtx.fillRect(0, 0, 128, 128);
+    
+    // Add grass-like pattern
+    for (let i = 0; i < 1000; i++) {
+      const x = Math.random() * 128;
+      const y = Math.random() * 128;
+      const length = 2 + Math.random() * 3;
+      const angle = Math.random() * Math.PI;
+      
+      turfCtx.strokeStyle = i % 2 === 0 ? '#2E5E41' : '#4A8B68';
+      turfCtx.beginPath();
+      turfCtx.moveTo(x, y);
+      turfCtx.lineTo(
+        x + Math.cos(angle) * length,
+        y + Math.sin(angle) * length
+      );
+      turfCtx.stroke();
+    }
+  }
+  teePadMaterial.map = new THREE.CanvasTexture(turfTextureCanvas);
+  teePadMaterial.map.repeat.set(2, 3);
+  teePadMaterial.map.wrapS = THREE.RepeatWrapping;
+  teePadMaterial.map.wrapT = THREE.RepeatWrapping;
+
   const teePad = new THREE.Mesh(teePadGeometry, teePadMaterial);
   teePad.position.set(-10, 0.05, 0);
   teePad.receiveShadow = true;
   teePad.castShadow = true;
   teeBoxGroup.add(teePad);
 
-  // Tee sign post
-  const signPostGeometry = new THREE.CylinderGeometry(0.05, 0.05, 1.5, 8);
-  const signPostMaterial = new THREE.MeshPhongMaterial({
-    color: 0x4B2F1D,
-    flatShading: true
-  });
-  const signPost = new THREE.Mesh(signPostGeometry, signPostMaterial);
-  signPost.position.set(-11, 0.75, -1);
-  signPost.castShadow = true;
-  teeBoxGroup.add(signPost);
+  // Function to create a bunny
+  function createBunny() {
+    const bunnyGroup = new THREE.Group();
+    
+    // Body
+    const bodyGeometry = new THREE.SphereGeometry(0.2, 12, 12);
+    const bunnyMaterial = new THREE.MeshPhongMaterial({
+      color: 0xE0E0E0,
+      shininess: 10,
+      flatShading: true
+    });
+    const body = new THREE.Mesh(bodyGeometry, bunnyMaterial);
+    bunnyGroup.add(body);
+    
+    // Head
+    const headGeometry = new THREE.SphereGeometry(0.15, 12, 12);
+    const head = new THREE.Mesh(headGeometry, bunnyMaterial);
+    head.position.set(0.15, 0.1, 0);
+    bunnyGroup.add(head);
+    
+    // Ears
+    const earGeometry = new THREE.ConeGeometry(0.05, 0.2, 8);
+    const ear1 = new THREE.Mesh(earGeometry, bunnyMaterial);
+    ear1.position.set(0.2, 0.25, 0.05);
+    ear1.rotation.z = -Math.PI / 6;
+    bunnyGroup.add(ear1);
+    
+    const ear2 = new THREE.Mesh(earGeometry, bunnyMaterial);
+    ear2.position.set(0.2, 0.25, -0.05);
+    ear2.rotation.z = -Math.PI / 6;
+    bunnyGroup.add(ear2);
+    
+    // Tail
+    const tailGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+    const tail = new THREE.Mesh(tailGeometry, bunnyMaterial);
+    tail.position.set(-0.2, 0, 0);
+    bunnyGroup.add(tail);
 
-  // Tee sign
-  const signGeometry = new THREE.BoxGeometry(0.8, 0.6, 0.05);
-  const signTextureCanvas = document.createElement('canvas');
-  signTextureCanvas.width = 256;
-  signTextureCanvas.height = 256;
-  const ctx = signTextureCanvas.getContext('2d');
-  if (ctx) {
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, 256, 256);
-    ctx.fillStyle = '#2F4F4F';
-    ctx.font = 'bold 48px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText('HOLE 1', 128, 80);
-    ctx.font = '36px Arial';
-    ctx.fillText('250 ft', 128, 140);
-    ctx.font = '24px Arial';
-    ctx.fillText('Par 3', 128, 180);
+    bunnyGroup.scale.set(0.5, 0.5, 0.5);
+    return bunnyGroup;
   }
-  const signTexture = new THREE.CanvasTexture(signTextureCanvas);
-  const signFaceMaterial = new THREE.MeshPhongMaterial({
-    map: signTexture,
-    shininess: 30
-  });
-  const signMaterials = [
-    signPostMaterial, // sides
-    signPostMaterial, // sides
-    signPostMaterial, // top
-    signPostMaterial, // bottom
-    signFaceMaterial, // front
-    signPostMaterial  // back
-  ];
-  const sign = new THREE.Mesh(signGeometry, signMaterials);
-  sign.position.set(-11, 1.3, -1);
-  sign.castShadow = true;
-  teeBoxGroup.add(sign);
 
-  scene.add(teeBoxGroup);
+  // Function to create a moose
+  function createMoose() {
+    const mooseGroup = new THREE.Group();
+    
+    // Body
+    const bodyGeometry = new THREE.CylinderGeometry(0.4, 0.4, 1.2, 8);
+    const mooseMaterial = new THREE.MeshPhongMaterial({
+      color: 0x4A3728,
+      shininess: 10,
+      flatShading: true
+    });
+    const body = new THREE.Mesh(bodyGeometry, mooseMaterial);
+    body.rotation.z = Math.PI / 2;
+    mooseGroup.add(body);
+    
+    // Head
+    const headGeometry = new THREE.CylinderGeometry(0.2, 0.3, 0.6, 8);
+    const head = new THREE.Mesh(headGeometry, mooseMaterial);
+    head.position.set(0.8, 0.3, 0);
+    head.rotation.z = -Math.PI / 6;
+    mooseGroup.add(head);
+    
+    // Antlers
+    const antlerMaterial = new THREE.MeshPhongMaterial({
+      color: 0x5C4033,
+      flatShading: true
+    });
+    
+    function createAntler(isRight: boolean) {
+      const antlerGroup = new THREE.Group();
+      const mainBeam = new THREE.CylinderGeometry(0.05, 0.03, 0.8, 6);
+      const beam = new THREE.Mesh(mainBeam, antlerMaterial);
+      beam.rotation.z = Math.PI / 3;
+      antlerGroup.add(beam);
+      
+      // Add prongs
+      for (let i = 0; i < 3; i++) {
+        const prongGeo = new THREE.CylinderGeometry(0.02, 0.01, 0.3, 4);
+        const prong = new THREE.Mesh(prongGeo, antlerMaterial);
+        prong.position.set(0.2 + i * 0.2, 0.2 + i * 0.1, 0);
+        prong.rotation.z = Math.PI / 4;
+        antlerGroup.add(prong);
+      }
+      
+      antlerGroup.position.set(0.8, 0.6, isRight ? 0.2 : -0.2);
+      return antlerGroup;
+    }
+    
+    mooseGroup.add(createAntler(true));
+    mooseGroup.add(createAntler(false));
+    
+    // Legs
+    const legGeometry = new THREE.CylinderGeometry(0.1, 0.05, 0.8, 6);
+    const legs = [[-0.3, -0.4], [-0.3, 0.4], [0.3, -0.4], [0.3, 0.4]];
+    legs.forEach(([x, z]) => {
+      const leg = new THREE.Mesh(legGeometry, mooseMaterial);
+      leg.position.set(x, -0.4, z);
+      mooseGroup.add(leg);
+    });
+
+    mooseGroup.scale.set(0.8, 0.8, 0.8);
+    return mooseGroup;
+  }
 
   // Create player figure
   const playerGroup = new THREE.Group();
@@ -384,11 +514,65 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
 
   // Improved disc with better geometry and materials
   const discGeometry: THREE.CylinderGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.05, 32);
-  const discMaterial: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({ 
-    color: 0xFF4500,
-    shininess: 100,
-    specular: 0x444444
+
+  // Create canvas for disc texture
+  const discTextureCanvas = document.createElement('canvas');
+  discTextureCanvas.width = 512;
+  discTextureCanvas.height = 512;
+  const discCtx = discTextureCanvas.getContext('2d');
+
+  // Function to create disc texture with logo and color
+  function createDiscTexture(color: string) {
+    if (discCtx) {
+      // Clear canvas
+      discCtx.clearRect(0, 0, 512, 512);
+      
+      // Fill background with disc color
+      discCtx.fillStyle = color;
+      discCtx.fillRect(0, 0, 512, 512);
+      
+      // Add logo
+      discCtx.save();
+      discCtx.translate(256, 256);
+      discCtx.fillStyle = 'white';
+      discCtx.font = 'bold 72px Arial';
+      discCtx.textAlign = 'center';
+      discCtx.textBaseline = 'middle';
+      discCtx.fillText('ADG', 0, 0);
+      
+      // Add flight numbers
+      discCtx.font = '36px Arial';
+      discCtx.fillText('7 | 5 | -1 | 2', 0, 60);
+      discCtx.restore();
+    }
+    return new THREE.CanvasTexture(discTextureCanvas);
+  }
+
+  // Array of disc colors
+  const discColors = [
+    '#FF6B6B', // Red
+    '#4ECDC4', // Teal
+    '#45B7D1', // Blue
+    '#96CEB4', // Green
+    '#FFEEAD', // Yellow
+    '#D4A5A5', // Pink
+    '#9B59B6'  // Purple
+  ];
+
+  let currentDiscTexture: THREE.CanvasTexture;
+  let currentDiscColor = discColors[0];
+
+  // Create initial disc texture
+  currentDiscTexture = createDiscTexture(currentDiscColor);
+
+  const discMaterial: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
+    map: currentDiscTexture,
+    color: 0xFFFFFF,
+    shininess: 30,
+    transparent: true,
+    opacity: 0.9
   });
+
   const disc: THREE.Mesh = new THREE.Mesh(discGeometry, discMaterial);
   disc.castShadow = true;
 
@@ -652,6 +836,38 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   mandoGroup.position.set(-5, 0, 2);
   scene.add(mandoGroup);
 
+  // Add a single moose to the scene
+  const moose = createMoose();
+  // Position the moose away from the player (player is at -10, 0, -0.5)
+  // Place moose in a random position in the back half of the course
+  const mooseX = Math.random() * 15 + 5; // Random position between x=5 and x=20
+  const mooseZ = (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 10 + 5); // Random position at least 5 units away in z
+  moose.position.set(mooseX, 0.4, mooseZ);
+  // Rotate moose to face a random direction
+  moose.rotation.y = Math.random() * Math.PI * 2;
+  scene.add(moose);
+
+  // Add mouse interaction variables
+  let mouseX = 0;
+  let mouseY = 0;
+  let targetCameraAngle = 0;
+  let currentCameraAngle = 0;
+  let isAnimationComplete = false;
+
+  // Add mouse move handler
+  const handleMouseMove = (event: MouseEvent): void => {
+    if (!isAnimationComplete) return;
+    
+    // Calculate normalized mouse position (-1 to 1)
+    const rect = container.getBoundingClientRect();
+    mouseX = ((event.clientX - rect.left) / container.clientWidth) * 2 - 1;
+    mouseY = ((event.clientY - rect.top) / container.clientHeight) * 2 - 1;
+    
+    // Map mouse X position to camera angle around basket
+    targetCameraAngle = mouseX * Math.PI * 0.5; // +/- 90 degrees
+  };
+  container.addEventListener('mousemove', handleMouseMove);
+
   // Animation loop with improved physics and camera following
   function animate(): void {
     requestAnimationFrame(animate);
@@ -681,6 +897,13 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
       disc.position.x = Math.pow(1 - progress, 2) * p0.x + 2 * (1 - progress) * progress * p1.x + Math.pow(progress, 2) * p2.x;
       disc.position.y = Math.pow(1 - progress, 2) * p0.y + 2 * (1 - progress) * progress * p1.y + Math.pow(progress, 2) * p2.y;
       disc.position.z = Math.pow(1 - progress, 2) * p0.z + 2 * (1 - progress) * progress * p1.z + Math.pow(progress, 2) * p2.z;
+
+      // Prevent intersection with pole by adjusting z position if too close to center
+      const distanceToCenter = new THREE.Vector2(disc.position.x - 10, disc.position.z).length();
+      if (distanceToCenter < 0.3 && disc.position.y > 2.8) { // If too close to pole
+        // Push the disc to either side based on its current trajectory
+        disc.position.z += disc.position.z >= 0 ? 0.3 : -0.3;
+      }
 
       // Calculate velocity for landing physics
       if (progress > 0.9) {
@@ -750,9 +973,29 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
       discVelocity.y -= 9.8 * 0.016; // Gravity
       disc.position.add(discVelocity.clone().multiplyScalar(0.016));
       
-      // Check for chain collisions
+      // Check for chain collisions and prevent pole intersection
       const distanceToCenter = new THREE.Vector2(disc.position.x - 10, disc.position.z).length();
       const heightInBasket = disc.position.y - 2.8; // Height above basket bottom
+      
+      // Prevent intersection with pole
+      if (distanceToCenter < 0.3 && heightInBasket > 0) {
+        // Push the disc away from the pole
+        const angle = Math.atan2(disc.position.z, disc.position.x - 10);
+        disc.position.x = 10 + Math.cos(angle) * 0.3;
+        disc.position.z = Math.sin(angle) * 0.3;
+        
+        // Calculate reflection manually
+        const normal = new THREE.Vector2(Math.cos(angle), Math.sin(angle));
+        const velocity2D = new THREE.Vector2(discVelocity.x, discVelocity.z);
+        
+        // Manual reflection calculation: v - 2(v·n)n
+        const dot = velocity2D.dot(normal);
+        const reflection = velocity2D.clone().sub(normal.multiplyScalar(2 * dot));
+        reflection.multiplyScalar(0.5); // Add energy loss
+        
+        discVelocity.x = reflection.x;
+        discVelocity.z = reflection.y;
+      }
       
       if (distanceToCenter < chainRadius + 0.5 && heightInBasket > 0 && heightInBasket < 1.4) {
         if (discMadeIt) {
@@ -782,11 +1025,25 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
         isLanding = false;
         chainsAnimating = true;
         chainAnimationTime = 0;
+        
+        // Only change disc color after it has come to rest
+        currentDiscColor = discColors[Math.floor(Math.random() * discColors.length)];
+        currentDiscTexture = createDiscTexture(currentDiscColor);
+        (disc.material as THREE.MeshPhongMaterial).map = currentDiscTexture;
+        currentDiscTexture.needsUpdate = true;
       } else if (disc.position.y < 0.1) {
         disc.position.y = 0.1; // Bounce on ground
         discVelocity.y *= -0.3;
         discVelocity.x *= 0.7;
         discVelocity.z *= 0.7;
+        
+        // Only change disc color after it has stopped on the ground
+        if (Math.abs(discVelocity.y) < 0.1) {
+          currentDiscColor = discColors[Math.floor(Math.random() * discColors.length)];
+          currentDiscTexture = createDiscTexture(currentDiscColor);
+          (disc.material as THREE.MeshPhongMaterial).map = currentDiscTexture;
+          currentDiscTexture.needsUpdate = true;
+        }
       }
       
       // Add wobble based on velocity
@@ -872,6 +1129,24 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
       }
     }
 
+    // After landing sequence is complete
+    if (!isAnimating && !isLanding) {
+      isAnimationComplete = true;
+      
+      // Smoothly interpolate camera angle
+      currentCameraAngle += (targetCameraAngle - currentCameraAngle) * 0.05;
+      
+      // Calculate camera position based on angle
+      const cameraDistance = 8;
+      const cameraHeight = 5 - mouseY * 2; // Adjust height based on mouse Y
+      camera.position.x = 10 + Math.cos(currentCameraAngle) * cameraDistance;
+      camera.position.z = Math.sin(currentCameraAngle) * cameraDistance;
+      camera.position.y = cameraHeight;
+      
+      // Always look at the basket
+      camera.lookAt(new THREE.Vector3(10, 2.8, 0));
+    }
+
     renderer.render(scene, camera);
   }
   animate();
@@ -887,6 +1162,7 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   // Cleanup function
   return () => {
     window.removeEventListener('resize', handleResize);
+    container.removeEventListener('mousemove', handleMouseMove);
     renderer.dispose();
   };
 }
