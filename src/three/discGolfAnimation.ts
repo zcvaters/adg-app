@@ -273,62 +273,119 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   // Create player figure
   const playerGroup = new THREE.Group();
 
-  // Body
-  const bodyGeometry = new THREE.CylinderGeometry(0.2, 0.15, 1.2, 8);
+  // Body - made wider and more natural looking
+  const bodyGeometry = new THREE.CylinderGeometry(0.25, 0.3, 1.0, 8);
   const bodyMaterial = new THREE.MeshPhongMaterial({
     color: 0x2F4F4F, // Dark winter jacket color
     flatShading: true
   });
   const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-  body.position.y = 0.9;
-  body.rotation.x = -Math.PI * 0.1; // Lean forward slightly
+  body.position.y = 0.8;
+  body.rotation.x = -Math.PI * 0.05; // Reduced lean forward
   playerGroup.add(body);
 
-  // Head
-  const headGeometry = new THREE.SphereGeometry(0.15, 8, 8);
+  // Add a jacket zipper detail
+  const zipperGeometry = new THREE.BoxGeometry(0.02, 0.8, 0.1);
+  const zipperMaterial = new THREE.MeshPhongMaterial({
+    color: 0x696969,
+    flatShading: true
+  });
+  const zipper = new THREE.Mesh(zipperGeometry, zipperMaterial);
+  zipper.position.set(0, 0.8, 0.25);
+  body.add(zipper);
+
+  // Head - made more oval and natural
+  const headGeometry = new THREE.SphereGeometry(0.15, 12, 12);
   const headMaterial = new THREE.MeshPhongMaterial({
-    color: 0xE0C8A0, // Skin tone
+    color: 0xE0C8A0, // Warmer skin tone
     flatShading: true
   });
   const head = new THREE.Mesh(headGeometry, headMaterial);
-  head.position.y = 1.6;
-  head.position.z = -0.1; // Slight forward position due to lean
+  head.position.y = 1.5;
+  head.position.z = -0.05; // Reduced forward position
+  head.scale.set(1, 1.1, 1); // Slightly oval shape
   playerGroup.add(head);
 
-  // Winter hat
-  const hatGeometry = new THREE.ConeGeometry(0.2, 0.3, 8);
+  // Add simple face features
+  const faceGroup = new THREE.Group();
+  
+  // Eyes
+  const eyeGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+  const eyeMaterial = new THREE.MeshPhongMaterial({
+    color: 0x000000,
+    flatShading: true
+  });
+  const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+  leftEye.position.set(-0.05, 0.02, 0.12);
+  const rightEye = leftEye.clone();
+  rightEye.position.set(0.05, 0.02, 0.12);
+  faceGroup.add(leftEye);
+  faceGroup.add(rightEye);
+
+  // Simple smile
+  const smileGeometry = new THREE.TorusGeometry(0.05, 0.01, 8, 8, Math.PI);
+  const smileMaterial = new THREE.MeshPhongMaterial({
+    color: 0x000000,
+    flatShading: true
+  });
+  const smile = new THREE.Mesh(smileGeometry, smileMaterial);
+  smile.position.set(0, -0.02, 0.12);
+  smile.rotation.x = Math.PI / 2;
+  faceGroup.add(smile);
+
+  head.add(faceGroup);
+
+  // Winter hat - made more stylish
+  const hatGroup = new THREE.Group();
+  const hatBaseGeometry = new THREE.CylinderGeometry(0.17, 0.17, 0.15, 8);
+  const hatTopGeometry = new THREE.SphereGeometry(0.17, 8, 8);
   const hatMaterial = new THREE.MeshPhongMaterial({
     color: 0x8B0000, // Dark red winter hat
     flatShading: true
   });
-  const hat = new THREE.Mesh(hatGeometry, hatMaterial);
-  hat.position.y = 1.8;
-  hat.position.z = -0.1;
-  playerGroup.add(hat);
+  
+  const hatBase = new THREE.Mesh(hatBaseGeometry, hatMaterial);
+  const hatTop = new THREE.Mesh(hatTopGeometry, hatMaterial);
+  hatTop.position.y = 0.1;
+  hatGroup.add(hatBase);
+  hatGroup.add(hatTop);
 
-  // Arms (in throwing position)
-  const armGeometry = new THREE.CylinderGeometry(0.06, 0.04, 0.6, 8);
+  // Add hat pom-pom
+  const pomPomGeometry = new THREE.SphereGeometry(0.08, 8, 8);
+  const pomPomMaterial = new THREE.MeshPhongMaterial({
+    color: 0xFFFFFF,
+    flatShading: true
+  });
+  const pomPom = new THREE.Mesh(pomPomGeometry, pomPomMaterial);
+  pomPom.position.y = 0.25;
+  hatGroup.add(pomPom);
+
+  hatGroup.position.set(0, 1.7, -0.05);
+  playerGroup.add(hatGroup);
+
+  // Arms - made more natural with shoulders
+  const armGeometry = new THREE.CylinderGeometry(0.06, 0.05, 0.6, 8);
   const armMaterial = new THREE.MeshPhongMaterial({
     color: 0x2F4F4F,
     flatShading: true
   });
 
-  // Right arm (throwing arm)
+  // Right arm (throwing arm) with better positioning
   const rightArm = new THREE.Mesh(armGeometry, armMaterial);
-  rightArm.position.set(0.3, 1.2, 0);
+  rightArm.position.set(0.35, 1.2, 0);
   rightArm.rotation.z = -Math.PI * 0.15;
   rightArm.rotation.x = Math.PI * 0.2;
   playerGroup.add(rightArm);
 
-  // Left arm
+  // Left arm with better positioning
   const leftArm = new THREE.Mesh(armGeometry, armMaterial);
-  leftArm.position.set(-0.3, 1.2, 0);
+  leftArm.position.set(-0.35, 1.2, 0);
   leftArm.rotation.z = Math.PI * 0.3;
   leftArm.rotation.x = -Math.PI * 0.1;
   playerGroup.add(leftArm);
 
-  // Legs
-  const legGeometry = new THREE.CylinderGeometry(0.08, 0.06, 0.8, 8);
+  // Legs - made more natural with better stance
+  const legGeometry = new THREE.CylinderGeometry(0.09, 0.07, 0.8, 8);
   const legMaterial = new THREE.MeshPhongMaterial({
     color: 0x1B1B1B, // Dark pants
     flatShading: true
@@ -656,27 +713,12 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   // Chains with physics
   const chainCount = 12;
   const chainRadius = 0.7;
-  const chainLength = 1.2;
+  const chainLength = 1.4; // Increased length for more slack
   const chainSegments = 12;
   const chains: THREE.Mesh[][] = [];
   const chainPhysics: { velocity: number; angle: number; }[][] = [];
 
-  // Create chain attachment points on rim
-  const chainAttachments: THREE.Mesh[] = [];
-  for (let i = 0; i < chainCount; i++) {
-    const angle = (i / chainCount) * Math.PI * 2;
-    const attachGeometry = new THREE.SphereGeometry(0.02, 8, 8);
-    const attachMaterial = new THREE.MeshPhongMaterial({ color: 0xC0C0C0 });
-    const attachment = new THREE.Mesh(attachGeometry, attachMaterial);
-    attachment.position.set(
-      Math.cos(angle) * chainRadius,
-      4.0,
-      Math.sin(angle) * chainRadius
-    );
-    chainAttachments.push(attachment);
-    basketGroup.add(attachment);
-  }
-
+  // Create chain segments with initial slack
   for (let i = 0; i < chainCount; i++) {
     const angle = (i / chainCount) * Math.PI * 2;
     const chainArray: THREE.Mesh[] = [];
@@ -692,26 +734,25 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
       });
       const chainSegment = new THREE.Mesh(chainGeometry, chainMaterial);
       
-      // Position each segment with proper attachment to previous segment
+      // Calculate position with natural curve
+      const progress = j / (chainSegments - 1);
+      const slack = Math.sin(progress * Math.PI) * 0.2; // Add natural curve
+      const targetRadius = chainRadius * (1 - Math.pow(progress, 1.5)); // More gradual curve toward pole
+      
+      // Position with slack
       const yOffset = j * segmentHeight;
       chainSegment.position.set(
-        Math.cos(angle) * chainRadius,
+        Math.cos(angle) * (targetRadius + slack),
         4.0 - yOffset - (segmentHeight / 2),
-        Math.sin(angle) * chainRadius
+        Math.sin(angle) * (targetRadius + slack)
       );
-      
-      // Rotate segment to connect with previous segment
-      if (j > 0) {
-        const prevSegment = chainArray[j - 1];
-        chainSegment.position.y = prevSegment.position.y - segmentHeight;
-      }
       
       chainSegment.castShadow = true;
       
-      // Store initial position for physics
+      // Store initial physics state with some random variation
       chainPhysicsArray.push({
         velocity: 0,
-        angle: 0 // Start at rest position
+        angle: (Math.random() - 0.5) * 0.1 // Small random initial angle
       });
       
       chainArray.push(chainSegment);
@@ -973,9 +1014,27 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
       discVelocity.y -= 9.8 * 0.016; // Gravity
       disc.position.add(discVelocity.clone().multiplyScalar(0.016));
       
-      // Check for chain collisions and prevent pole intersection
+      // Check for chain collisions and basket boundaries
       const distanceToCenter = new THREE.Vector2(disc.position.x - 10, disc.position.z).length();
-      const heightInBasket = disc.position.y - 2.8; // Height above basket bottom
+      const heightInBasket = disc.position.y - 2.8;
+      
+      // Keep disc within basket boundaries
+      const basketTopRadius = 0.8;
+      const basketBottomRadius = 0.6;
+      const discRadius = 0.5;
+      const maxAllowedRadius = basketBottomRadius - discRadius * 0.8; // Slightly less than disc radius to prevent overhang
+      
+      if (distanceToCenter > maxAllowedRadius && heightInBasket < 1.2) {
+        // Calculate angle to basket center
+        const angle = Math.atan2(disc.position.z, disc.position.x - 10);
+        
+        // Push disc back inside basket bounds
+        disc.position.x = 10 + Math.cos(angle) * maxAllowedRadius;
+        disc.position.z = Math.sin(angle) * maxAllowedRadius;
+        
+        // Dampen velocity to prevent bouncing
+        discVelocity.multiplyScalar(0.5);
+      }
       
       // Prevent intersection with pole
       if (distanceToCenter < 0.3 && heightInBasket > 0) {
@@ -997,6 +1056,7 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
         discVelocity.z = reflection.y;
       }
       
+      // Chain collision handling
       if (distanceToCenter < chainRadius + 0.5 && heightInBasket > 0 && heightInBasket < 1.4) {
         if (discMadeIt) {
           // Successful shot - guide disc into basket
@@ -1004,9 +1064,9 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
           discVelocity.multiplyScalar(0.7); // Slow down from chain contact
           discVelocity.y *= 0.5; // Extra vertical damping
           
-          // Move disc slightly toward center
+          // Guide disc toward center more strongly
           const toCenter = new THREE.Vector2(10 - disc.position.x, -disc.position.z);
-          toCenter.normalize().multiplyScalar(0.1);
+          toCenter.normalize().multiplyScalar(0.2); // Increased centering force
           disc.position.x += toCenter.x;
           disc.position.z += toCenter.y;
         } else {
@@ -1018,31 +1078,21 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
         }
       }
       
-      // Check for ground/basket bottom collision
-      if (disc.position.y < 2.9 && distanceToCenter < 0.8) {
+      // Check for ground/basket bottom collision with improved settling
+      if (disc.position.y < 2.9 && distanceToCenter < maxAllowedRadius) {
         disc.position.y = 2.9; // Rest in basket
-        discVelocity.set(0, 0, 0);
-        isLanding = false;
-        chainsAnimating = true;
-        chainAnimationTime = 0;
         
-        // Only change disc color after it has come to rest
-        currentDiscColor = discColors[Math.floor(Math.random() * discColors.length)];
-        currentDiscTexture = createDiscTexture(currentDiscColor);
-        (disc.material as THREE.MeshPhongMaterial).map = currentDiscTexture;
-        currentDiscTexture.needsUpdate = true;
-      } else if (disc.position.y < 0.1) {
-        disc.position.y = 0.1; // Bounce on ground
-        discVelocity.y *= -0.3;
-        discVelocity.x *= 0.7;
-        discVelocity.z *= 0.7;
-        
-        // Only change disc color after it has stopped on the ground
-        if (Math.abs(discVelocity.y) < 0.1) {
-          currentDiscColor = discColors[Math.floor(Math.random() * discColors.length)];
-          currentDiscTexture = createDiscTexture(currentDiscColor);
-          (disc.material as THREE.MeshPhongMaterial).map = currentDiscTexture;
-          currentDiscTexture.needsUpdate = true;
+        // Gradually move disc toward basket center when settling
+        const toCenter = new THREE.Vector2(10 - disc.position.x, -disc.position.z);
+        if (toCenter.length() > 0.1) { // Only center if not already very close
+          toCenter.normalize().multiplyScalar(0.1);
+          disc.position.x += toCenter.x;
+          disc.position.z += toCenter.y;
+        } else {
+          discVelocity.set(0, 0, 0);
+          isLanding = false;
+          chainsAnimating = true;
+          chainAnimationTime = 0;
         }
       }
       
@@ -1085,42 +1135,51 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
         
         chain.forEach((segment, segmentIndex) => {
           const physics = chainPhysics[chainIndex][segmentIndex];
+          const progress = segmentIndex / (chainSegments - 1);
           
-          // Calculate forces with attachment constraint
-          const springForce = -0.3 * physics.angle;
-          const dampingForce = -0.2 * physics.velocity;
-          const impactForce = impact * Math.exp(-segmentIndex * 0.2) * 
-            Math.exp(-chainAnimationTime * 2) * 
-            Math.sin(chainAnimationTime * 15 + segmentIndex * 0.5);
+          // Softer spring forces for more natural movement
+          const springForce = -0.15 * physics.angle; // Reduced spring force
+          const dampingForce = -0.1 * physics.velocity; // Reduced damping
+          const impactForce = impact * Math.exp(-segmentIndex * 0.15) * 
+            Math.exp(-chainAnimationTime * 1.5) * 
+            Math.sin(chainAnimationTime * 12 + segmentIndex * 0.4);
           
-          // Update physics with position constraints
-          physics.velocity += (springForce + dampingForce + impactForce) * 0.016;
+          // Add slight constant motion for chain sway
+          const swayForce = Math.sin(Date.now() * 0.001 + chainIndex * 0.5) * 0.0001;
+          
+          physics.velocity += (springForce + dampingForce + impactForce + swayForce) * 0.016;
           physics.angle += physics.velocity * 0.016;
           
-          // Limit chain movement to maintain attachment
-          physics.angle = Math.max(Math.min(physics.angle, Math.PI / 4), -Math.PI / 4);
+          // Allow more movement range
+          const maxAngle = Math.PI / 3 * (1 - progress * 0.6); // Increased range of motion
+          physics.angle = Math.max(Math.min(physics.angle, maxAngle), -maxAngle);
           
-          const currentRadius = chainRadius + Math.sin(physics.angle) * 0.2;
-          const segmentHeight = chainLength / chainSegments;
-          const yOffset = segmentIndex * segmentHeight;
+          const targetRadius = chainRadius * (1 - Math.pow(progress, 1.5));
+          const slack = Math.sin(progress * Math.PI) * 0.2;
+          const currentRadius = targetRadius + slack + Math.sin(physics.angle) * 0.3;
           
-          // Position segment with attachment to previous
           if (segmentIndex === 0) {
             // First segment stays attached to rim
             segment.position.x = Math.cos(baseAngle) * chainRadius;
-            segment.position.y = 4.0 - (segmentHeight / 2);
+            segment.position.y = 4.0 - (chainLength / chainSegments / 2);
             segment.position.z = Math.sin(baseAngle) * chainRadius;
           } else {
-            // Other segments follow previous segment
             const prevSegment = chain[segmentIndex - 1];
-            segment.position.x = prevSegment.position.x + Math.sin(physics.angle) * 0.1;
-            segment.position.y = prevSegment.position.y - segmentHeight;
-            segment.position.z = prevSegment.position.z + Math.sin(physics.angle) * 0.1;
+            const poleInfluence = Math.pow(progress, 1.2) * 0.7; // More gradual pole influence
+            
+            // Add some natural droop
+            const droopFactor = Math.sin(progress * Math.PI) * 0.1;
+            
+            segment.position.x = prevSegment.position.x * (1 - poleInfluence) + droopFactor * Math.cos(baseAngle);
+            segment.position.y = prevSegment.position.y - (chainLength / chainSegments) * (1 + droopFactor);
+            segment.position.z = prevSegment.position.z * (1 - poleInfluence) + droopFactor * Math.sin(baseAngle);
+            
+            // More natural chain segment rotation
+            const towardsPole = Math.atan2(segment.position.z, segment.position.x);
+            segment.rotation.x = Math.sin(physics.angle) * 0.3 * (1 - progress);
+            segment.rotation.z = Math.cos(physics.angle) * 0.3 * (1 - progress);
+            segment.rotation.y = towardsPole + Math.PI / 2;
           }
-          
-          // Update segment rotation
-          segment.rotation.x = Math.sin(physics.angle) * 0.2;
-          segment.rotation.z = Math.cos(physics.angle) * 0.2;
         });
       });
       
