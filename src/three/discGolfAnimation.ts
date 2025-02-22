@@ -54,6 +54,8 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   });
   const disc: THREE.Mesh = new THREE.Mesh(discGeometry, discMaterial);
   disc.castShadow = true;
+  // Set initial disc angle
+  disc.rotation.x = Math.PI / 6; // Slight upward angle for hyzer
   scene.add(disc);
 
   // Detailed basket components
@@ -151,9 +153,9 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
 
   // Animation variables
   let time: number = 0;
-  const initialDiscPosition = new THREE.Vector3(-10, 1, 0);
-  const targetPosition = new THREE.Vector3(10, 3.5, 0);
-  const animationDuration = 2;
+  const initialDiscPosition = new THREE.Vector3(-10, 1.5, 0);
+  const targetPosition = new THREE.Vector3(10, 3.2, 0);
+  const animationDuration = 2.5;
   let isAnimating = true;
 
   // Particle system for trail effect
@@ -184,18 +186,21 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
 
       const progress = Math.min(time / animationDuration, 1);
       
-      // Bezier curve for smooth arc
+      // Bezier curve for smooth arc with more realistic flight path
       const p0 = initialDiscPosition;
-      const p1 = new THREE.Vector3(-5, 6, 0); // Control point
+      const p1 = new THREE.Vector3(-2, 5, 0); // Adjusted control point for better arc
       const p2 = targetPosition;
       
       disc.position.x = Math.pow(1 - progress, 2) * p0.x + 2 * (1 - progress) * progress * p1.x + Math.pow(progress, 2) * p2.x;
       disc.position.y = Math.pow(1 - progress, 2) * p0.y + 2 * (1 - progress) * progress * p1.y + Math.pow(progress, 2) * p2.y;
       disc.position.z = Math.pow(1 - progress, 2) * p0.z + 2 * (1 - progress) * progress * p1.z + Math.pow(progress, 2) * p2.z;
 
-      // Disc rotation
-      disc.rotation.x = progress * Math.PI * 4;
-      disc.rotation.z = progress * Math.PI / 4;
+      // Disc rotation - now more like a real frisbee
+      disc.rotation.y = progress * Math.PI * 8; // Spin around vertical axis
+      // Gradually level out the hyzer angle
+      disc.rotation.x = (Math.PI / 6) * (1 - Math.min(progress * 1.5, 1));
+      // Slight wobble
+      disc.rotation.z = Math.sin(progress * Math.PI * 2) * 0.1;
 
       // Update particle trail
       const positions = particleSystem.geometry.attributes.position.array as Float32Array;
