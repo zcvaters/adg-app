@@ -6,7 +6,7 @@ import InstagramFeed from '../components/InstagramFeed.astro';
 import EventCard from '../components/EventCard.astro';
 import { getNextEvent } from '../data/events';
 import FacebookFeed from '../components/FacebookFeed.astro';
-
+import DiscGolfAnimation from '../components/DiscGolfAnimation.astro';
 const nextEvent = getNextEvent();
 ---
 
@@ -16,32 +16,11 @@ const nextEvent = getNextEvent();
 		<div class="relative text-center mb-12 py-16 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden shadow-lg border border-primary-200">
 			<!-- Add banner image as background -->
 			<div class="absolute inset-0 z-0">
-				<Image 
-					src={"/banner.jpg"}
-					alt="Avalon Disc Golf Championship 2024" 
-					class="w-full h-full object-cover opacity-30"
-					width={1920}
-					height={1080}
-					loading="eager"
-				/>
+				<DiscGolfAnimation />
 			</div>
 			
 			<!-- Existing content with increased z-index -->
 			<div class="relative z-10">
-				<!-- Decorative disc golf elements -->
-				<div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-10 animate-spin-slow">
-					<svg class="w-96 h-96 text-primary-400" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
-						<circle cx="12" cy="12" r="3"/>
-					</svg>
-				</div>
-				<div class="absolute bottom-0 left-0 transform -translate-x-1/2 translate-y-1/2 opacity-10 animate-float">
-					<svg class="w-72 h-72 text-primary-400" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
-						<circle cx="12" cy="12" r="3"/>
-					</svg>
-				</div>
-				
 				<h1 class="text-5xl font-bold text-primary-700 mb-4 animate-fade-in">Avalon Disc Golfers</h1>
 				<p class="text-2xl text-primary-600 mb-8 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.2s;">
 					Growing the sport of disc golf across Newfoundland's Avalon Peninsula

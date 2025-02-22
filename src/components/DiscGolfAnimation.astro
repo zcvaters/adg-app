@@ -1,0 +1,25 @@
+<div id="disc-golf-container" class="w-full h-96"></div>
+
+<script>
+  import { initDiscGolfAnimation } from '../three/discGolfAnimation';
+
+  // Type the container as HTMLElement | null
+  const container: HTMLElement | null = document.getElementById('disc-golf-container');
+  
+  // Initialize animation when DOM is ready
+  if (container) {
+    const cleanup = initDiscGolfAnimation(container);
+
+    // Optional: Cleanup on script unload (Astro-specific)
+    document.addEventListener('astro:unmount', () => {
+      if (cleanup) cleanup();
+    });
+  }
+</script>
+
+<style>
+  #disc-golf-container {
+    width: 100%;
+    height: 400px; /* Adjust height as needed */
+  }
+</style>
