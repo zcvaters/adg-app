@@ -12,9 +12,23 @@ const nextEvent = getNextEvent();
 
 <Layout title="Avalon Disc Golfers">
 	<main class="page-transition">
-			<div class="relative text-center mb-12 py-16 px-8 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden">
+		<div class="relative text-center mb-12 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden">
+			<!-- Animation container -->
+			<div class="relative z-0">
 				<DiscGolfAnimation />
 			</div>
+			
+			<!-- Semi-transparent overlay -->
+			
+			<div class="absolute inset-x-0 bottom-0 flex flex-col items-center justify-center z-20 p-8 bg-gradient-to-t from-white/80 to-transparent">
+				<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-700 mb-4 text-shadow-lg">
+					Avalon Disc Golfers
+				</h1>
+				<p class="text-lg md:text-xl text-primary-600 max-w-2xl mx-auto px-4 text-shadow-sm">
+					Growing the sport of disc golf in Newfoundland and Labrador
+				</p>
+			</div>
+		</div>
 
 		<section class="mb-12 text-center relative reveal-on-scroll">
 			<div class="absolute top-0 right-0 w-24 h-24 transform translate-x-12 -translate-y-12 opacity-10">

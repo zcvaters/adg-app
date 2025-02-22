@@ -104,11 +104,36 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
 
   // Tee sign
   const signGeometry = new THREE.BoxGeometry(0.8, 0.6, 0.05);
-  const signMaterial = new THREE.MeshPhongMaterial({
-    color: 0x2F4F4F,
-    flatShading: true
+  const signTextureCanvas = document.createElement('canvas');
+  signTextureCanvas.width = 256;
+  signTextureCanvas.height = 256;
+  const ctx = signTextureCanvas.getContext('2d');
+  if (ctx) {
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, 256, 256);
+    ctx.fillStyle = '#2F4F4F';
+    ctx.font = 'bold 48px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('HOLE 1', 128, 80);
+    ctx.font = '36px Arial';
+    ctx.fillText('250 ft', 128, 140);
+    ctx.font = '24px Arial';
+    ctx.fillText('Par 3', 128, 180);
+  }
+  const signTexture = new THREE.CanvasTexture(signTextureCanvas);
+  const signFaceMaterial = new THREE.MeshPhongMaterial({
+    map: signTexture,
+    shininess: 30
   });
-  const sign = new THREE.Mesh(signGeometry, signMaterial);
+  const signMaterials = [
+    signPostMaterial, // sides
+    signPostMaterial, // sides
+    signPostMaterial, // top
+    signPostMaterial, // bottom
+    signFaceMaterial, // front
+    signPostMaterial  // back
+  ];
+  const sign = new THREE.Mesh(signGeometry, signMaterials);
   sign.position.set(-11, 1.3, -1);
   sign.castShadow = true;
   teeBoxGroup.add(sign);
@@ -374,7 +399,7 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   // Add "ADG" text written in snow
   const fontLoader = new FontLoader();
   fontLoader.load('/fonts/helvetiker_regular.typeface.json', (font: Font) => {
-    const textGeometry = new TextGeometry('Avalon Disc Golfers', {
+    const textGeometry = new TextGeometry('ADG', {
       font: font,
       size: 2,
       height: 0.2,
@@ -571,6 +596,62 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
   const particleSystem = new THREE.Points(particles, particleMaterial);
   scene.add(particleSystem);
 
+  // Add flight path indicator
+  const flightPathPoints = [];
+  const flightPathCurve = new THREE.CubicBezierCurve3(
+    initialDiscPosition,
+    new THREE.Vector3(-2, 5, 0),
+    new THREE.Vector3(5, 5, 0),
+    targetPosition
+  );
+  for (let t = 0; t <= 1; t += 0.01) {
+    flightPathPoints.push(flightPathCurve.getPoint(t));
+  }
+  const flightPathGeometry = new THREE.BufferGeometry().setFromPoints(flightPathPoints);
+  const flightPathMaterial = new THREE.LineBasicMaterial({
+    color: 0x4299E1,
+    transparent: true,
+    opacity: 0.3,
+    linewidth: 1
+  });
+  const flightPath = new THREE.Line(flightPathGeometry, flightPathMaterial);
+  scene.add(flightPath);
+
+  // Add mandatory passage (mando)
+  const mandoGroup = new THREE.Group();
+  const mandoPoleGeometry = new THREE.CylinderGeometry(0.05, 0.05, 3, 8);
+  const mandoPoleMaterial = new THREE.MeshPhongMaterial({
+    color: 0x4B2F1D,
+    flatShading: true
+  });
+  const mandoPole = new THREE.Mesh(mandoPoleGeometry, mandoPoleMaterial);
+  mandoPole.position.y = 1.5;
+  mandoGroup.add(mandoPole);
+
+  // Add mando arrow
+  const arrowShape = new THREE.Shape();
+  arrowShape.moveTo(0, 0);
+  arrowShape.lineTo(0.5, -0.25);
+  arrowShape.lineTo(0.5, -0.1);
+  arrowShape.lineTo(1.0, -0.1);
+  arrowShape.lineTo(1.0, 0.1);
+  arrowShape.lineTo(0.5, 0.1);
+  arrowShape.lineTo(0.5, 0.25);
+  arrowShape.lineTo(0, 0);
+
+  const arrowGeometry = new THREE.ShapeGeometry(arrowShape);
+  const arrowMaterial = new THREE.MeshPhongMaterial({
+    color: 0xFF4500,
+    side: THREE.DoubleSide
+  });
+  const arrow = new THREE.Mesh(arrowGeometry, arrowMaterial);
+  arrow.position.set(-0.5, 2.5, 0);
+  arrow.scale.set(0.5, 0.5, 0.5);
+  mandoGroup.add(arrow);
+
+  mandoGroup.position.set(-5, 0, 2);
+  scene.add(mandoGroup);
+
   // Animation loop with improved physics and camera following
   function animate(): void {
     requestAnimationFrame(animate);
@@ -650,6 +731,9 @@ export function initDiscGolfAnimation(container: HTMLElement): () => void {
       }
       particleSystem.geometry.setAttribute('opacity', new THREE.BufferAttribute(opacities, 1));
 
+      // Update flight path visibility
+      flightPath.material.opacity = Math.max(0, 0.3 - progress * 0.5);
+      
       if (progress >= 1) {
         isAnimating = false;
         isLanding = true;
