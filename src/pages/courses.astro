@@ -5,13 +5,15 @@ import { Image } from 'astro:assets';
 
 const courses = [
     {
-        name: "McNiven",
-        description: "A scenic 18-hole course located in St. John's, developed in 2024. Perfect for both beginners and experienced players. The course features a mix of open and wooded holes, offering a variety of challenging shots.",
+        name: "McNiven DiscGolfPark",
+        location: "St. John's, NL",
+        description: "A scenic 18-hole disc golf course located in St. John's, Newfoundland, developed in 2024. Perfect for both beginners and experienced players. The course features a mix of open and wooded holes, offering a variety of challenging shots.",
         udiscLink: "https://udisc.com/courses/mc-niven-disc-golf-park-7yOe",
         image: "/mcniven-course.jpg",
         features: [
             "18 holes",
             "Beginner friendly",
+            "Free to play",
             "Parking available",
             "Mixed terrain",
             "Practice basket",
@@ -19,21 +21,26 @@ const courses = [
         ]
     },
     {
-        name: "Confederation Hill",
-        description: "An exciting 9-hole course offering stunning views of St. John's. This challenging course features elevation changes and technical shots that will test players of all skill levels.",
+        name: "Confederation Hill DGC",
+        location: "St. John's, NL",
+        description: "An exciting 9-hole disc golf course offering stunning views of St. John's, Newfoundland. This challenging course features elevation changes and technical shots that will test players of all skill levels.",
         udiscLink: "https://udisc.com/courses/confederation-hill-dgc-7O6J",
         image: "/confederation-course.jpg",
         features: [
+            "9 holes",
             "Scenic views",
+            "Free to play",
             "Beginner friendly",
             "Practice basket",
             "Tee pads"
         ]
     }
 ] satisfies Course[];
+
+const pageDescription = "Find disc golf courses in St. John's, Newfoundland and Labrador. Play at McNiven DiscGolfPark (18 holes) and Confederation Hill (9 holes) on the Avalon Peninsula. Free public courses for all skill levels.";
 ---
 
-<Layout title="Local Courses | Avalon Disc Golfers">
+<Layout title="Disc Golf Courses in St. John's, NL" description={pageDescription}>
     <div class="relative text-center mb-12 py-16 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden">
         <!-- Decorative disc golf elements -->
         <div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-10">
@@ -59,9 +66,9 @@ const courses = [
                 loading="eager"
             />
         </div>
-        <h1 class="text-5xl font-bold text-primary-700 mb-4">Local Disc Golf Courses</h1>
+        <h1 class="text-5xl font-bold text-primary-700 mb-4">Disc Golf Courses in St. John's, NL</h1>
         <p class="text-xl text-primary-600 max-w-2xl mx-auto">
-            Explore the local disc golf courses on the Avalon Peninsula. Each course offers unique challenges and experiences for players of all skill levels.
+            Play disc golf in Newfoundland! Explore free public courses on the Avalon Peninsula in St. John's. Perfect for beginners and experienced players alike.
         </p>
     </div>
 

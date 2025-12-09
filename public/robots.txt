@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://avalondiscgolfers.ca/sitemap-index.xml

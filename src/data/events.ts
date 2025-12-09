@@ -13,33 +13,8 @@ interface Event {
 }
 
 // All events, both past and upcoming
-const allEvents: Event[] = [
-    {
-        date: {
-            day: "6",
-            month: "MAR",
-            year: "2025"
-        },
-        title: "Winter Putting League Kickoff",
-        location: "TeeBox indoor golf, 340 Freshwater Road, St. John's",
-        description: "Join us for the start of our six week long putting league! $5/person each week, weekly prizes, and overall champion trophy.",
-        featured: true,
-        posterImage: "/events/winter-putting-league-poster-2025.PNG"
-    },
-    {
-        date: {
-            day: "16",
-            month: "FEB",
-            year: "2025"
-        },
-        title: "St. John's ChillFest Ice Bowl 2025",
-        location: "McNiven DiscGolfPark, St. John's",
-        registrationUrl: "https://www.discgolfscene.com/tournaments/St_Johns_ChillFest_Ice_Bowl_2025",
-        description: "Join us for St. John's first Ice Bowl! This charity event supports The Gathering Place while promoting disc golf in our community. Your registration includes a 2025 DGNL Membership with bag tag, 2025 ADG membership with custom wood mini, and a disc.",
-        featured: false,
-        posterImage: "/events/ice-bowl-poster-2025.jpg",
-    }
-];
+// Add new events here when scheduled - otherwise visitors are directed to Facebook
+const allEvents: Event[] = [];
 
 const MONTHS = {
     'JAN': 0, 'FEB': 1, 'MAR': 2, 'APR': 3, 'MAY': 4, 'JUN': 5,

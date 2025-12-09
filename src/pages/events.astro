@@ -1,14 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import EventCard from '../components/EventCard.astro';
-import EventPhotoGallery from '../components/EventPhotoGallery.astro';
-import { upcomingEvents, pastEvents } from '../data/events';
+import { upcomingEvents } from '../data/events';
 
 const upcoming = upcomingEvents();
-const past = pastEvents();
 ---
 
-<Layout title="Events - Avalon Disc Golfers">
+<Layout title="Disc Golf Events & Tournaments" description="Find disc golf tournaments, leagues, and events in St. John's, Newfoundland and Labrador. Join Avalon Disc Golfers for competitive and casual play.">
     <div class="relative text-center mb-12 py-16 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden">
         <!-- Decorative disc golf elements -->
         <div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-10">
@@ -25,7 +23,7 @@ const past = pastEvents();
         </div>
         <h1 class="text-5xl font-bold text-primary-700 mb-4">Events</h1>
         <p class="text-xl text-primary-600 max-w-2xl mx-auto">
-            Join us for tournaments, clinics, and community events throughout the year
+            Join us for tournaments, leagues, and community events throughout the year
         </p>
     </div>
 
@@ -38,18 +36,30 @@ const past = pastEvents();
                 ))}
             </div>
         </section>
-    ) : null}
-
-    {past.length > 0 ? (
+    ) : (
         <section class="mb-12">
-            <h2 class="text-3xl font-bold text-primary-700 mb-6 text-center">Past Events</h2>
-            <div class="space-y-8">
-                {past.map(event => (
-                    <EventCard {...event} />
-                ))}
+            <div class="bg-white p-8 rounded-lg shadow-md text-center max-w-2xl mx-auto">
+                <svg class="w-16 h-16 mx-auto mb-4 text-primary-400" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                </svg>
+                <h2 class="text-2xl font-bold text-primary-700 mb-3">No Events Currently Scheduled</h2>
+                <p class="text-primary-600 mb-6">
+                    Check our Facebook page for the latest event announcements and updates!
+                </p>
+                <a 
+                    href="https://www.facebook.com/groups/1705263463278631" 
+                    class="inline-flex items-center gap-2 bg-[#1877F2] text-white py-3 px-6 rounded-lg hover:bg-[#166FE5] transition duration-300 font-medium"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                    </svg>
+                    Follow Us on Facebook
+                </a>
             </div>
         </section>
-    ) : null}
+    )}
 
     <div class="grid md:grid-cols-2 gap-8 mb-12">
         <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden">

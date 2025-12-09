@@ -13,16 +13,92 @@ interface Props {
 
 const { 
 	title,
-	description = "Avalon Disc Golfers - Growing the sport of disc golf on the Avalon Peninsula",
+	description = "Avalon Disc Golfers is Newfoundland and Labrador's premier disc golf club. Join our community in St. John's and across the Avalon Peninsula for tournaments, leagues, and casual play in Canada's easternmost province.",
 	image = "/adg-logo.jpg",
 	canonicalURL = Astro.url.href,
 } = Astro.props;
 
-const fullTitle = `${title} | Avalon Disc Golfers`;
+const fullTitle = `${title} | Avalon Disc Golfers - St. John's, Newfoundland`;
+const siteUrl = "https://avalondiscgolfers.ca";
+const keywords = "disc golf St. John's, disc golf Newfoundland, disc golf NL, frisbee golf St. John's, Avalon disc golf, disc golf courses St. John's, disc golf club Newfoundland, disc golf Avalon Peninsula, disc golf tournaments NL, disc golf leagues St. John's, McNiven disc golf, Confederation disc golf, Atlantic Canada disc golf, disc golf Canada east coast";
+
+// Structured data for local organization - optimized for Google local search
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": ["SportsOrganization", "Organization"],
+	"@id": `${siteUrl}/#organization`,
+	"name": "Avalon Disc Golfers",
+	"alternateName": ["ADG", "Avalon Disc Golf Club", "St. John's Disc Golf"],
+	"description": "Avalon Disc Golfers is the premier disc golf club in St. John's, Newfoundland and Labrador. We organize tournaments, leagues, and maintain disc golf courses on the Avalon Peninsula.",
+	"url": siteUrl,
+	"logo": {
+		"@type": "ImageObject",
+		"url": `${siteUrl}/adg-logo.jpg`,
+		"width": 400,
+		"height": 400
+	},
+	"image": [
+		`${siteUrl}/adg-logo.jpg`,
+		`${siteUrl}/banner.jpg`
+	],
+	"address": {
+		"@type": "PostalAddress",
+		"streetAddress": "McNiven DiscGolfPark",
+		"addressLocality": "St. John's",
+		"addressRegion": "NL",
+		"postalCode": "A1A",
+		"addressCountry": "CA"
+	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": 47.596938063390944,
+		"longitude": -52.748444347816736
+	},
+	"areaServed": [
+		{
+			"@type": "City",
+			"name": "St. John's",
+			"containedInPlace": {
+				"@type": "AdministrativeArea",
+				"name": "Newfoundland and Labrador"
+			}
+		},
+		{
+			"@type": "Place",
+			"name": "Avalon Peninsula"
+		},
+		{
+			"@type": "AdministrativeArea",
+			"name": "Newfoundland and Labrador"
+		}
+	],
+	"sport": "Disc Golf",
+	"sameAs": [
+		"https://www.facebook.com/groups/1705263463278631",
+		"https://www.instagram.com/avalondiscgolfers",
+		"https://discord.gg/ggGxeEAKD"
+	],
+	"knowsAbout": ["Disc Golf", "Frisbee Golf", "Disc Golf Courses", "Disc Golf Tournaments"],
+	"slogan": "Growing the sport of disc golf in Newfoundland and Labrador"
+};
+
+// Additional structured data for the website
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"@id": `${siteUrl}/#website`,
+	"url": siteUrl,
+	"name": "Avalon Disc Golfers",
+	"description": description,
+	"publisher": {
+		"@id": `${siteUrl}/#organization`
+	},
+	"inLanguage": "en-CA"
+};
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="bg-primary-50">
+<html lang="en-CA" class="bg-primary-50">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -30,6 +106,8 @@ const fullTitle = `${title} | Avalon Disc Golfers`;
 		<link rel="icon" type="image/png" href="/favicon.png" />
 		<link rel="apple-touch-icon" href="/favicon.png" />
 		<title>{fullTitle}</title>
+		
+		<!-- SEO Meta Tags -->
 		<SEO
 			title={fullTitle}
 			description={description}
@@ -42,11 +120,12 @@ const fullTitle = `${title} | Avalon Disc Golfers`;
 					url: canonicalURL,
 				},
 				image: {
-					alt: "Avalon Disc Golfers Logo",
+					alt: "Avalon Disc Golfers - Disc Golf Club in Newfoundland and Labrador, Canada",
 				},
 				optional: {
 					description,
 					siteName: "Avalon Disc Golfers",
+					locale: "en_CA",
 				},
 			}}
 			twitter={{
@@ -56,6 +135,26 @@ const fullTitle = `${title} | Avalon Disc Golfers`;
 				image,
 			}}
 		/>
+		
+		<!-- Additional SEO Meta Tags -->
+		<meta name="keywords" content={keywords} />
+		<meta name="author" content="Avalon Disc Golfers" />
+		<meta name="robots" content="index, follow" />
+		
+		<!-- Geographic Meta Tags -->
+		<meta name="geo.region" content="CA-NL" />
+		<meta name="geo.placename" content="St. John's, Newfoundland and Labrador" />
+		<meta name="geo.position" content="47.596938063390944;-52.748444347816736" />
+		<meta name="ICBM" content="47.596938063390944, -52.748444347816736" />
+		
+		<!-- Language and Locale -->
+		<meta property="og:locale" content="en_CA" />
+		<link rel="alternate" hreflang="en-CA" href={canonicalURL} />
+		
+		<!-- Structured Data for Local SEO -->
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />

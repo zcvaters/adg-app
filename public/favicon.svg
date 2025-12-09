@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="16" cy="16" r="15" fill="#002868"/>
-    <circle cx="16" cy="16" r="6" fill="white"/>
-    <circle cx="16" cy="16" r="3" fill="#002868"/>
+    <!-- Disc golf disc from above with realistic rim -->
+    <!-- Shadow/depth -->
+    <ellipse cx="16" cy="17" rx="14" ry="13" fill="#0F172A" opacity="0.3"/>
+    <!-- Outer rim -->
+    <ellipse cx="16" cy="16" rx="14" ry="13" fill="#1E3A5F"/>
+    <!-- Inner rim bevel -->
+    <ellipse cx="16" cy="16" rx="11.5" ry="10.5" fill="#2563EB"/>
+    <!-- Flight plate -->
+    <ellipse cx="16" cy="15.5" rx="9.5" ry="8.5" fill="#3B82F6"/>
+    <!-- Dome highlight -->
+    <ellipse cx="13" cy="13" rx="5" ry="4" fill="#60A5FA" opacity="0.5"/>
+    <!-- Small dome highlight -->
+    <ellipse cx="11" cy="11" rx="2" ry="1.5" fill="#93C5FD" opacity="0.6"/>
+    <!-- Center stamp area -->
+    <circle cx="16" cy="15" r="3.5" fill="#1E40AF"/>
+    <!-- Stamp detail - simple disc icon -->
+    <circle cx="16" cy="15" r="2" fill="#3B82F6"/>
+    <circle cx="16" cy="15" r="0.8" fill="#1E40AF"/>
 </svg>
