@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allMinutes = await getCollection('minutes');
+const sortedMinutes = allMinutes.sort((a, b) => 
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const formatDate = (date: Date): string => {
+    return date.toLocaleDateString('en-CA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+};
+---
+
+<Layout title="Meeting Minutes" description="Meeting minutes and records from Avalon Disc Golfers board meetings. Stay informed about club decisions, upcoming events, and community initiatives.">
+    <div class="relative text-center mb-12 py-16 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden">
+        <!-- Decorative disc golf elements -->
+        <div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-10">
+            <svg class="w-48 md:w-96 h-48 md:h-96" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+        </div>
+        <div class="absolute bottom-0 left-0 transform -translate-x-1/2 translate-y-1/2 opacity-10">
+            <svg class="w-36 md:w-72 h-36 md:h-72" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-primary-700 mb-4">Meeting Minutes</h1>
+        <p class="text-lg md:text-xl text-primary-600 max-w-2xl mx-auto px-4">
+            Records from Avalon Disc Golfers board meetings
+        </p>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-4xl">
+        {sortedMinutes.map(async (meeting) => {
+            const { Content } = await meeting.render();
+            return (
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                    <!-- Meeting Header -->
+                    <div class="bg-primary-700 text-white px-6 py-4">
+                        <h2 class="text-2xl font-bold">{meeting.data.title}</h2>
+                        <p class="text-primary-200 mt-1">{formatDate(meeting.data.date)}</p>
+                    </div>
+
+                    <div class="p-6">
+                        <!-- Attendees -->
+                        {meeting.data.attendees && meeting.data.attendees.length > 0 && (
+                            <div class="mb-6">
+                                <h3 class="text-lg font-semibold text-primary-700 mb-2 flex items-center">
+                                    <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                                    </svg>
+                                    Attendance
+                                </h3>
+                                <div class="flex flex-wrap gap-2">
+                                    {meeting.data.attendees.map((attendee: string) => (
+                                        <span class="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm">
+                                            {attendee}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        <!-- Rendered Markdown Content -->
+                        <div class="prose prose-primary max-w-none 
+                            prose-headings:text-primary-700 prose-headings:border-l-4 prose-headings:border-primary-300 prose-headings:pl-4 prose-headings:mt-6 prose-headings:mb-3
+                            prose-p:text-primary-600 
+                            prose-li:text-primary-600 
+                            prose-strong:text-primary-700
+                            prose-ul:space-y-1
+                            prose-ol:space-y-1">
+                            <Content />
+                        </div>
+                    </div>
+                </article>
+            );
+        })}
+
+        {sortedMinutes.length === 0 && (
+            <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                <svg class="w-16 h-16 mx-auto mb-4 text-primary-400" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                </svg>
+                <h2 class="text-2xl font-bold text-primary-700 mb-3">No Meeting Minutes Available</h2>
+                <p class="text-primary-600">
+                    Check back later for updates from board meetings.
+                </p>
+            </div>
+        )}
+    </div>
+</Layout>
