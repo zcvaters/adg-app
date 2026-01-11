@@ -95,6 +95,133 @@ const websiteSchema = {
 	},
 	"inLanguage": "en-CA"
 };
+
+// FAQ Schema - High impact for Google rich snippets and LLM discoverability
+const faqSchema = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": [
+		{
+			"@type": "Question",
+			"name": "Where can I play disc golf in St. John's, Newfoundland?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "St. John's has two main disc golf courses: McNiven Disc Golf Park and Confederation Hill. Both are free to play and open year-round. McNiven is a wooded course with 18 holes, while Confederation Hill offers open terrain with scenic views. Avalon Disc Golfers maintains both courses."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "How do I join Avalon Disc Golfers?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "You can join Avalon Disc Golfers by signing up for a membership on our website or attending one of our events. Memberships help support course maintenance, tournaments, and growing the sport in Newfoundland and Labrador. All skill levels are welcome!"
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "Does Avalon Disc Golfers host disc golf tournaments?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Yes! Avalon Disc Golfers hosts tournaments throughout the year at McNiven and Confederation Hill courses. We run events for all skill levels, from beginner-friendly casual tournaments to competitive league play. Check our events page for upcoming tournaments."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "Is disc golf beginner friendly in St. John's?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Absolutely! Disc golf is one of the most accessible outdoor sports. Both St. John's courses welcome beginners, and Avalon Disc Golfers regularly hosts learn-to-play clinics. You just need a disc to get started—no fees to play on the courses. Our community is welcoming to new players of all ages."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "What is disc golf?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Disc golf is an outdoor sport where players throw flying discs into elevated metal baskets. Like traditional golf, the goal is to complete each hole in as few throws as possible. It's played on courses with 9 or 18 holes through parks, woods, and open spaces. It's free to play, fun for all ages, and great exercise."
+			}
+		}
+	]
+};
+
+// Course Schemas - Helps with "disc golf courses near me" searches
+const mcnivenCourseSchema = {
+	"@context": "https://schema.org",
+	"@type": "SportsActivityLocation",
+	"@id": `${siteUrl}/#mcniven`,
+	"name": "McNiven Disc Golf Park",
+	"description": "18-hole wooded disc golf course in St. John's, Newfoundland. Free to play, open year-round. Maintained by Avalon Disc Golfers.",
+	"url": `${siteUrl}/courses`,
+	"image": `${siteUrl}/mcniven-course.jpg`,
+	"sport": "Disc Golf",
+	"isAccessibleForFree": true,
+	"publicAccess": true,
+	"address": {
+		"@type": "PostalAddress",
+		"addressLocality": "St. John's",
+		"addressRegion": "NL",
+		"addressCountry": "CA"
+	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": 47.596938,
+		"longitude": -52.748444
+	},
+	"amenityFeature": [
+		{ "@type": "LocationFeatureSpecification", "name": "18 Holes", "value": true },
+		{ "@type": "LocationFeatureSpecification", "name": "Wooded Terrain", "value": true },
+		{ "@type": "LocationFeatureSpecification", "name": "Free Parking", "value": true }
+	],
+	"openingHoursSpecification": {
+		"@type": "OpeningHoursSpecification",
+		"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+		"opens": "00:00",
+		"closes": "23:59"
+	},
+	"containedInPlace": {
+		"@type": "City",
+		"name": "St. John's"
+	}
+};
+
+const confederationCourseSchema = {
+	"@context": "https://schema.org",
+	"@type": "SportsActivityLocation",
+	"@id": `${siteUrl}/#confederation`,
+	"name": "Confederation Hill Disc Golf Course",
+	"description": "Open terrain disc golf course with scenic views in St. John's, Newfoundland. Free to play, open year-round. Maintained by Avalon Disc Golfers.",
+	"url": `${siteUrl}/courses`,
+	"image": `${siteUrl}/confederation-course.jpg`,
+	"sport": "Disc Golf",
+	"isAccessibleForFree": true,
+	"publicAccess": true,
+	"address": {
+		"@type": "PostalAddress",
+		"addressLocality": "St. John's",
+		"addressRegion": "NL",
+		"addressCountry": "CA"
+	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": 47.5726,
+		"longitude": -52.7453
+	},
+	"amenityFeature": [
+		{ "@type": "LocationFeatureSpecification", "name": "Open Terrain", "value": true },
+		{ "@type": "LocationFeatureSpecification", "name": "Scenic Views", "value": true },
+		{ "@type": "LocationFeatureSpecification", "name": "Beginner Friendly", "value": true }
+	],
+	"openingHoursSpecification": {
+		"@type": "OpeningHoursSpecification",
+		"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+		"opens": "00:00",
+		"closes": "23:59"
+	},
+	"containedInPlace": {
+		"@type": "City",
+		"name": "St. John's"
+	}
+};
 ---
 
 <!DOCTYPE html>
@@ -154,6 +281,9 @@ const websiteSchema = {
 		<!-- Structured Data for Local SEO -->
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(mcnivenCourseSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(confederationCourseSchema)} />
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
