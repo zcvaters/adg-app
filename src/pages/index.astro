@@ -2,10 +2,8 @@
 import '../styles/global.css';
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import InstagramFeed from '../components/InstagramFeed.astro';
 import EventCard from '../components/EventCard.astro';
 import { getNextEvent } from '../data/events';
-import FacebookFeed from '../components/FacebookFeed.astro';
 import courseMaintenance from '../../public/course-maintenance.png';
 import banner from '../../public/banner.jpg';
 import clinic from '../../public/clinic.png';
@@ -38,16 +36,139 @@ const nextEvent = getNextEvent();
 					<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
 				</svg>
 			</div>
-			<h2 class="text-3xl font-bold text-primary-700 mb-4">St. John's Disc Golf Community</h2>
+			<h2 class="text-3xl font-bold text-primary-700 mb-4">Avalon Disc Golf Community</h2>
 			<p class="text-lg text-primary-600 max-w-2xl mx-auto">
 				Avalon Disc Golfers is a not-for-profit organization dedicated to developing, promoting, and supporting disc golf in St. John's and across the Avalon Peninsula in Newfoundland and Labrador, Canada.
 			</p>
 		</section>
 
+		<section class="mb-12 rounded-xl border border-primary-100 bg-gradient-to-br from-primary-50 to-white p-8 shadow-md overflow-hidden relative disc-moments">
+			<div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-primary-200/25 blur-2xl"></div>
+			<div class="absolute -bottom-12 -left-12 w-48 h-48 rounded-full bg-accent-200/30 blur-2xl"></div>
+
+			<div class="relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+				<div>
+					<h2 class="text-3xl font-bold text-primary-700 mb-2">Disc Golf, Front and Centre</h2>
+					<p class="text-lg text-primary-600 max-w-2xl mb-0">
+						From first throw to tap-in putt, our club is built around local fairways, basket reps, and welcoming rounds at McNiven and Confederation Hill.
+					</p>
+				</div>
+				<div class="flight-scene rounded-2xl border border-primary-200 bg-white/90 px-4 py-3 text-sm font-semibold text-primary-700">
+					<svg class="flight-svg" viewBox="0 0 260 70" fill="none" aria-hidden="true">
+						<path class="flight-arc" d="M16 54C82 10 160 10 224 38"></path>
+						<circle class="flight-disc" cx="16" cy="54" r="5" fill="currentColor">
+							<animateMotion
+								id="flight-throw-motion"
+								dur="2.6s"
+								begin="indefinite"
+								repeatCount="1"
+								fill="freeze"
+								path="M0 0C66 -44 144 -44 208 -16"
+								rotate="auto"
+							/>
+						</circle>
+						<g class="flight-basket">
+							<animateTransform
+								id="flight-basket-rattle"
+								attributeName="transform"
+								type="translate"
+								dur="2.6s"
+								begin="indefinite"
+								repeatCount="1"
+								values="0 0;0 0;-0.8 0;1 0;-0.6 0;0 0"
+								keyTimes="0;0.94;0.95;0.965;0.98;1"
+								calcMode="linear"
+							/>
+							<ellipse class="basket-rim" cx="226" cy="21.5" rx="12.5" ry="2.8"></ellipse>
+							<path class="basket-rim-support" d="M214 21.5h24"></path>
+							<path class="basket-chain" d="M217 23.5L220 39"></path>
+							<path class="basket-chain" d="M221 23.2L223.5 39"></path>
+							<path class="basket-chain" d="M225 23L226 39"></path>
+							<path class="basket-chain" d="M229 23L228.5 39"></path>
+							<path class="basket-chain" d="M233 23.2L230 39"></path>
+							<path class="basket-chain" d="M237 23.5L232.5 39"></path>
+							<path class="basket-chain basket-chain-cross" d="M219 24L233 39"></path>
+							<path class="basket-chain basket-chain-cross" d="M235 24L220 39"></path>
+							<ellipse class="basket-cage" cx="226" cy="39.5" rx="9.5" ry="2.1"></ellipse>
+							<path class="basket-pole" d="M226 41.5v15"></path>
+							<path class="basket-foot" d="M220 57h12"></path>
+						</g>
+						<circle class="basket-hit" cx="226" cy="39" r="7">
+							<animate
+								id="flight-hit-opacity"
+								attributeName="opacity"
+								dur="2.6s"
+								begin="indefinite"
+								repeatCount="1"
+								values="0;0;0.85;0"
+								keyTimes="0;0.94;0.955;1"
+								calcMode="linear"
+							/>
+							<animate
+								id="flight-hit-radius"
+								attributeName="r"
+								dur="2.6s"
+								begin="indefinite"
+								repeatCount="1"
+								values="7;7;10;13"
+								keyTimes="0;0.94;0.955;1"
+								calcMode="linear"
+							/>
+						</circle>
+					</svg>
+					<span class="flight-label">Local line, local community</span>
+				</div>
+			</div>
+
+			<div class="grid md:grid-cols-3 gap-5 relative z-10">
+				<article class="disc-card bg-white p-6 rounded-lg border border-primary-100 shadow-sm">
+					<div class="text-primary-500 mb-3">
+						<svg class="w-9 h-9" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+							<path d="M3 15c2.5-4 6-6 10.5-6 2.8 0 5.2.9 7.5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+							<circle cx="20" cy="12" r="2" fill="currentColor"></circle>
+						</svg>
+					</div>
+					<h3 class="text-xl font-semibold text-primary-700 mb-2">Shot Shaping</h3>
+					<p class="text-primary-600 mb-0">
+						Learn controlled hyzer, flat, and turnover lines with players who know these courses in every season.
+					</p>
+				</article>
+				<article class="disc-card bg-white p-6 rounded-lg border border-primary-100 shadow-sm">
+					<div class="text-primary-500 mb-3">
+						<svg class="w-9 h-9" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+							<path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" fill="currentColor"></path>
+							<rect x="5" y="9" width="14" height="10" fill="white"></rect>
+							<rect x="7.2" y="11" width="4" height="4" fill="currentColor"></rect>
+						</svg>
+					</div>
+					<h3 class="text-xl font-semibold text-primary-700 mb-2">League & Tournament Days</h3>
+					<p class="text-primary-600 mb-0">
+						Join weekly league rounds and events like IceBowl, with formats for both competitive and casual players.
+					</p>
+				</article>
+				<article class="disc-card bg-white p-6 rounded-lg border border-primary-100 shadow-sm">
+					<div class="text-primary-500 mb-3">
+						<svg class="w-9 h-9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+							<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+							<circle cx="12" cy="12" r="3" fill="white"></circle>
+						</svg>
+					</div>
+					<h3 class="text-xl font-semibold text-primary-700 mb-2">Course Work Days</h3>
+					<p class="text-primary-600 mb-0">
+						Join volunteer cleanups to clear fairways, maintain tees, and keep McNiven and Confederation Hill playable year-round.
+					</p>
+				</article>
+			</div>
+		</section>
+
 		<section class="mb-12">
 			<h2 class="text-3xl font-bold text-primary-700 mb-6 text-center">What We Do</h2>
 			<div class="grid md:grid-cols-3 gap-6">
-				<div class="bg-white p-6 rounded-lg shadow-md border border-primary-100 transform hover:scale-105 transition-transform">
+				<a
+					href="/courses"
+					aria-label="Go to Courses page"
+					class="block bg-white p-6 rounded-lg shadow-md border border-primary-100 transform hover:scale-105 transition-transform hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+				>
 					<Image
 						src={courseMaintenance}
 						alt="Course maintenance"
@@ -61,8 +182,12 @@ const nextEvent = getNextEvent();
 					</div>
 					<h3 class="text-xl font-semibold text-primary-600 mb-3">Course Development</h3>
 					<p class="text-primary-600">Build, maintain, and improve disc golf courses across the Avalon peninsula</p>
-				</div>
-				<div class="bg-white p-6 rounded-lg shadow-md border border-primary-100 transform hover:scale-105 transition-transform">
+				</a>
+				<a
+					href="/events"
+					aria-label="Go to Events page"
+					class="block bg-white p-6 rounded-lg shadow-md border border-primary-100 transform hover:scale-105 transition-transform hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+				>
 					<Image
 						src={banner}
 						alt="Disc golf events"
@@ -75,8 +200,12 @@ const nextEvent = getNextEvent();
 					</div>
 					<h3 class="text-xl font-semibold text-primary-600 mb-3">Events</h3>
 					<p class="text-primary-600">Organize and host disc golf tournaments and community events</p>
-				</div>
-				<div class="bg-white p-6 rounded-lg shadow-md border border-primary-100 transform hover:scale-105 transition-transform">
+				</a>
+				<a
+					href="#latest-updates"
+					aria-label="Jump to Latest Updates section"
+					class="block bg-white p-6 rounded-lg shadow-md border border-primary-100 transform hover:scale-105 transition-transform hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+				>
 					<Image
 						src={clinic}
 						alt="Community disc golf clinic"
@@ -89,7 +218,7 @@ const nextEvent = getNextEvent();
 					</div>
 					<h3 class="text-xl font-semibold text-primary-600 mb-3">Community Outreach</h3>
 					<p class="text-primary-600">Grow the sport through education, training, and community engagement</p>
-				</div>
+				</a>
 			</div>
 		</section>
 
@@ -100,11 +229,129 @@ const nextEvent = getNextEvent();
 			</section>
 		)}
 	
-		<section class="mb-12">
+		<section id="latest-updates" class="mb-12">
 			<h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Latest Updates</h2>
 			<div class="grid md:grid-cols-2 gap-6">
-				<InstagramFeed />
-				<FacebookFeed />
+				<article class="bg-white p-6 rounded-lg shadow-md border border-primary-100 hover:shadow-lg transition-shadow">
+					<div class="flex items-center justify-between mb-4">
+						<div class="flex items-center gap-3">
+							<div class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white">
+								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5a4.25 4.25 0 0 0 4.25 4.25h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5a4.25 4.25 0 0 0-4.25-4.25h-8.5Zm8.88 1.12a1.12 1.12 0 1 1 0 2.25 1.12 1.12 0 0 1 0-2.25ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/>
+								</svg>
+							</div>
+							<div>
+								<h3 class="text-xl font-semibold text-primary-700 mb-0">Instagram</h3>
+								<p class="text-sm text-primary-600 mb-0">@avalondiscgolfers</p>
+							</div>
+						</div>
+						<span class="text-xs font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded-full">Photos + reels</span>
+					</div>
+					<p class="text-primary-600 mb-5">
+						Behind-the-scenes course work, tournament highlights, and club moments from around the Avalon.
+					</p>
+					<div class="mb-5 rounded-lg border border-primary-100 overflow-hidden bg-white">
+						<iframe
+							src="https://www.instagram.com/avalondiscgolfers/embed/"
+							title="Instagram preview for Avalon Disc Golfers"
+							class="w-full h-[300px]"
+							loading="lazy"
+						></iframe>
+					</div>
+					<a
+						href="https://www.instagram.com/avalondiscgolfers"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 bg-primary-600 text-white py-2 px-5 rounded-md hover:bg-primary-700 transition-colors"
+					>
+						Open Instagram
+						<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M9 7h8v8"/>
+						</svg>
+					</a>
+				</article>
+
+				<article class="bg-white p-6 rounded-lg shadow-md border border-primary-100 hover:shadow-lg transition-shadow">
+					<div class="flex items-center justify-between mb-4">
+						<div class="flex items-center gap-3">
+							<div class="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center text-white">
+								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+									<path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+								</svg>
+							</div>
+							<div>
+								<h3 class="text-xl font-semibold text-primary-700 mb-0">Facebook</h3>
+								<p class="text-sm text-primary-600 mb-0">Avalon Disc Golfers</p>
+							</div>
+						</div>
+						<span class="text-xs font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded-full">Announcements</span>
+					</div>
+					<p class="text-primary-600 mb-5">
+						Event posts, schedule updates, and community notices in one place for members and new players.
+					</p>
+					<div class="mb-5 rounded-lg border border-primary-100 overflow-hidden bg-white">
+						<iframe
+							src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100094687651350&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId="
+							title="Facebook preview for Avalon Disc Golfers"
+							class="w-full h-[300px]"
+							loading="lazy"
+							scrolling="no"
+						></iframe>
+					</div>
+					<a
+						href="https://www.facebook.com/groups/1705263463278631"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 bg-[#1877F2] text-white py-2 px-5 rounded-md hover:bg-[#166fe5] transition-colors"
+					>
+						Open Facebook
+						<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M9 7h8v8"/>
+						</svg>
+					</a>
+				</article>
+			</div>
+		</section>
+
+		<section class="mb-12">
+			<div class="bg-white p-8 rounded-lg shadow-md border border-primary-100 relative overflow-hidden">
+				<div class="absolute top-0 right-0 w-28 h-28 transform translate-x-10 -translate-y-10 opacity-10">
+					<svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full text-primary-500">
+						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+						<circle cx="12" cy="12" r="3"/>
+					</svg>
+				</div>
+				<h2 class="text-3xl font-bold text-primary-700 mb-3">Where to Buy Discs</h2>
+				<p class="text-lg text-primary-600 mb-5 max-w-3xl">
+					Looking for your next disc? Right now, the best local selection is at Tee Box Indoor Golf.
+				</p>
+				<div class="flex flex-wrap items-center gap-3">
+					<a
+						href="https://www.google.com/maps/search/?api=1&query=Tee+Box+Indoor+Golf+St.+John%27s+NL"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 bg-primary-600 text-white py-2 px-5 rounded-md hover:bg-primary-700 transition-colors"
+					>
+						Get Directions
+						<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M9 7h8v8"/>
+						</svg>
+					</a>
+					<a
+						href="https://teeboxindoorgolf.com"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2 border border-primary-300 text-primary-700 bg-white py-2 px-5 rounded-md hover:bg-primary-50 transition-colors"
+					>
+						Visit Tee Box Site
+						<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M9 7h8v8"/>
+						</svg>
+					</a>
+					<p class="text-primary-600 mb-0">
+						Not sure what to pick? Join our Facebook page and ask the community for beginner-friendly recommendations.
+					</p>
+				</div>
 			</div>
 		</section>
 
@@ -136,7 +383,7 @@ const nextEvent = getNextEvent();
 						<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
 						<circle cx="12" cy="12" r="3"/>
 					</svg>
-					Merchandise sales
+					Tournament entry fees
 				</li>
 				<li class="flex items-center">
 					<svg class="w-5 h-5 mr-2 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
@@ -148,5 +395,148 @@ const nextEvent = getNextEvent();
 			</ul>
 		</section>
 
+	<script>
+	import { animate, inView, stagger } from 'motion';
+	const runAnimate = animate as any;
+
+	const setupDiscSection = () => {
+		const section = document.querySelector<HTMLElement>('.disc-moments');
+		if (!section) return;
+
+		const cards = section.querySelectorAll<HTMLElement>('.disc-card');
+		let flightAnimationPlayed = false;
+		const startSvgAnimation = (selector: string) => {
+			const animation = section.querySelector(selector) as SVGAnimationElement | null;
+			animation?.beginElement();
+		};
+
+		section.style.opacity = '0.75';
+		section.style.transform = 'translateY(20px)';
+		cards.forEach((card) => {
+			card.style.opacity = '0';
+			card.style.transform = 'translateY(22px)';
+		});
+
+		inView(section, () => {
+			runAnimate(
+				section,
+				{ opacity: [0.7, 1], transform: ['translateY(20px)', 'translateY(0px)'] },
+				{ duration: 0.45, easing: 'ease-out' }
+			);
+
+			runAnimate(
+				cards,
+				{ opacity: [0, 1], transform: ['translateY(22px)', 'translateY(0px)'] },
+				{ delay: stagger(0.1), duration: 0.45, easing: 'ease-out' }
+			);
+
+			if (!flightAnimationPlayed) {
+				startSvgAnimation('#flight-throw-motion');
+				startSvgAnimation('#flight-basket-rattle');
+				startSvgAnimation('#flight-hit-opacity');
+				startSvgAnimation('#flight-hit-radius');
+				flightAnimationPlayed = true;
+			}
+		}, { amount: 0.2 });
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupDiscSection);
+	} else {
+		setupDiscSection();
+	}
+</script>
+
+<style>
+	.disc-moments {
+		opacity: 1;
+	}
+
+	.disc-card {
+		will-change: transform, opacity;
+		transition: transform 0.18s ease-out;
+	}
+
+	.disc-card:hover {
+		transform: translateY(-5px);
+	}
+
+	.flight-scene {
+		position: relative;
+		min-width: 250px;
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		align-items: center;
+	}
+
+	.flight-svg {
+		width: 230px;
+		height: 62px;
+		color: var(--primary-600);
+	}
+
+	.flight-arc {
+		stroke: color-mix(in srgb, var(--primary-500) 55%, white);
+		stroke-width: 2;
+		stroke-dasharray: 6 7;
+		stroke-linecap: round;
+	}
+
+	.flight-disc {
+		filter: drop-shadow(0 0 3px rgba(26, 86, 162, 0.5));
+	}
+
+	.flight-basket {
+		transform-origin: 226px 39px;
+	}
+
+	.basket-rim,
+	.basket-rim-support,
+	.basket-cage,
+	.basket-pole,
+	.basket-foot {
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.basket-rim,
+	.basket-rim-support,
+	.basket-cage {
+		fill: none;
+		stroke-width: 1.8;
+	}
+
+	.basket-pole,
+	.basket-foot {
+		fill: none;
+		stroke-width: 2;
+	}
+
+	.basket-chain {
+		stroke: color-mix(in srgb, var(--primary-500) 70%, white);
+		stroke-width: 1.35;
+		stroke-linecap: round;
+		opacity: 0.95;
+	}
+
+	.basket-chain-cross {
+		opacity: 0.6;
+	}
+
+	.basket-hit {
+		fill: none;
+		stroke: color-mix(in srgb, var(--accent-500) 70%, white);
+		stroke-width: 2;
+		opacity: 0;
+	}
+
+	.flight-label {
+		display: inline-block;
+		margin-top: -0.1rem;
+	}
+
+</style>
 	</main>
 </Layout>
