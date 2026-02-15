@@ -9,8 +9,8 @@ const pdgaDiscountCode = '268_EAFF';
 ---
 
 <Layout
-	title="2026 Membership Information"
-	description="Learn what is included with your 2026 Avalon Disc Golfers membership, including AGM participation, PDGA affiliate discount details, bag tags, and member guidelines."
+	title="ADG Membership Guide 2026"
+	description="Your ADG 2026 membership guide: benefits, PDGA discount details, bag tag rules, and key resources for playing in Newfoundland and Labrador."
 >
 	<div class="relative text-center mb-12 py-14 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden">
 		<div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-10">
@@ -19,31 +19,27 @@ const pdgaDiscountCode = '268_EAFF';
 				<circle cx="12" cy="12" r="3"/>
 			</svg>
 		</div>
-		<h1 class="text-4xl md:text-5xl font-bold text-primary-700 mb-4">2026 Membership Information</h1>
+		<h1 class="text-4xl md:text-5xl font-bold text-primary-700 mb-4">ADG Membership Guide 2026</h1>
 		<p class="text-lg md:text-xl text-primary-600 max-w-3xl mx-auto px-4 mb-0">
-			We are very happy to have you as a member of Avalon Disc Golfers for the 2026 season.
-			This page outlines your membership benefits and key information for disc golf in our province.
+			Everything you need in one place: benefits, bag tag rules, and key links for the season.
 		</p>
 	</div>
 
 	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
-		<h2 class="text-3xl font-bold text-primary-700 mb-6">Membership Benefits</h2>
-		<div class="grid md:grid-cols-2 gap-6">
+		<h2 class="text-3xl font-bold text-primary-700 mb-6">At a Glance</h2>
+		<div class="grid md:grid-cols-3 gap-6">
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">Annual General Meeting</h3>
+				<h3 class="text-xl font-semibold text-primary-700 mb-3">AGM Access</h3>
 				<p class="text-primary-700 mb-0">
-					With your membership you can attend, vote, and run for positions within ADG at our annual AGM.
-					It is usually held late in the year, and members are contacted about four weeks in advance.
-					All interested members are welcome.
+					Attend, vote, and run for board positions at the annual ADG AGM.
 				</p>
 			</article>
 
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">Professional Disc Golf Association</h3>
+				<h3 class="text-xl font-semibold text-primary-700 mb-3">PDGA Discount</h3>
 				<p class="text-primary-700 mb-4">
-					DGNL is recognized as an affiliate club with the PDGA. As an ADG member, you can use DGNL affiliate
-					code <code class="font-semibold text-primary-800">{pdgaDiscountCode}</code> at checkout for
-					<code class="font-semibold text-primary-800">$5 USD off</code> your PDGA membership.
+					Use code <code class="font-semibold text-primary-800">{pdgaDiscountCode}</code> for
+					<code class="font-semibold text-primary-800">$5 USD off</code> PDGA membership.
 				</p>
 				<a
 					href={pdgaMembershipUrl}
@@ -51,60 +47,75 @@ const pdgaDiscountCode = '268_EAFF';
 					rel="noopener noreferrer"
 					class="inline-flex items-center gap-2 bg-primary-600 text-white py-2 px-5 rounded-md hover:bg-primary-700 transition-colors"
 				>
-					PDGA Membership
+					Join PDGA
 					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M9 7h8v8"/>
 					</svg>
 				</a>
 			</article>
+
+			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
+				<h3 class="text-xl font-semibold text-primary-700 mb-3">Two Wooden Tags</h3>
+				<p class="text-primary-700 mb-0">
+					You receive one ADG tag and one DGNL tag for season-long tag play.
+				</p>
+			</article>
 		</div>
 	</section>
 
 	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
-		<h2 class="text-3xl font-bold text-primary-700 mb-4">Bag Tags</h2>
-		<p class="text-primary-700 mb-6">
-			As part of your membership, you will receive a custom wooden ADG bag tag and a custom wooden DGNL bag tag.
-			They are a great way to show your membership and add a fun layer of competition throughout the season.
-		</p>
+		<h2 class="text-3xl font-bold text-primary-700 mb-4">Membership Benefits</h2>
+		<ul class="list-disc list-inside space-y-3 text-primary-700">
+			<li>Participate in ADG governance at the annual AGM (typically late in the year).</li>
+			<li>Receive AGM notice at least four weeks before the meeting date.</li>
+			<li>Use the PDGA affiliate discount through DGNL at checkout.</li>
+			<li>Compete with ADG and DGNL wooden bag tags through league, tournament, and casual rounds.</li>
+		</ul>
+	</section>
+
+	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
+		<h2 class="text-3xl font-bold text-primary-700 mb-6">Bag Tag Rules</h2>
 
 		<div class="grid md:grid-cols-2 gap-6">
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">How ADG tags work</h3>
-				<p class="text-primary-700 mb-0">
-					Tournament and league play requires tags to be turned in at the start of the event. Tags are redistributed
-					after the round in stroke-play order, regardless of division, with the lowest score receiving the lowest tag.
-					Top five tags must be defended within a reasonable timeframe or returned to the pool. Casual rounds can still
-					be played for tags, but tournament and league results are awarded by leaderboard standings.
-				</p>
+				<h3 class="text-xl font-semibold text-primary-700 mb-3">ADG Tags</h3>
+				<ul class="list-disc list-inside space-y-2 text-primary-700 mb-0">
+					<li>Turn tags in at the start of league and tournament rounds.</li>
+					<li>Tags are redistributed by overall stroke score, regardless of division.</li>
+					<li>Lowest score receives the lowest tag number (#1 is best).</li>
+					<li>Top five tags must be defended in a reasonable timeframe or returned to the pool.</li>
+					<li>Casual tag rounds are encouraged, but official event tags follow leaderboard results.</li>
+				</ul>
 			</article>
 
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">How DGNL tags work</h3>
-				<p class="text-primary-700 mb-0">
-					Each DGNL tag is numbered and issued at random. If two DGNL members agree to a tag round, the lower score at
-					the end of the round takes the lowest tag. League and tournament rounds are automatically considered tag rounds.
-				</p>
+				<h3 class="text-xl font-semibold text-primary-700 mb-3">DGNL Tags</h3>
+				<ul class="list-disc list-inside space-y-2 text-primary-700 mb-0">
+					<li>Tags are numbered and issued at random.</li>
+					<li>Any round can be a tag round when both DGNL members agree before tee-off.</li>
+					<li>The lower score takes the lower tag number.</li>
+					<li>League and tournament rounds are automatically tag rounds.</li>
+				</ul>
 			</article>
 		</div>
 	</section>
 
 	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
-		<h2 class="text-3xl font-bold text-primary-700 mb-6">General Information</h2>
+		<h2 class="text-3xl font-bold text-primary-700 mb-6">Rules, Tools, and Local Courses</h2>
 		<ul class="space-y-5 text-primary-700">
 			<li>
-				Members are expected to know and follow the PDGA Official Rules of Disc Golf.
-				Need to brush up? Visit the
+				<strong>PDGA Rules:</strong> Members are expected to follow the PDGA Official Rules of Disc Golf. Review the
 				<a href={pdgaRulesUrl} target="_blank" rel="noopener noreferrer">PDGA Official Rules</a>
-				and
+				or take
 				<a href={pdgaRulesSchoolUrl} target="_blank" rel="noopener noreferrer">PDGA Rules School</a>.
 			</li>
 			<li>
-				Many members use
+				<strong>UDisc:</strong> Most local players use
 				<a href={udiscUrl} target="_blank" rel="noopener noreferrer">UDisc</a>
-				to track rounds, locate courses, and find leagues and tournaments.
+				to track rounds, locate courses, and find league and tournament listings.
 			</li>
 			<li>
-				The Avalon region continues to grow, with two courses currently in St. John's:
+				<strong>Avalon Courses:</strong> Our region is growing. Current courses in St. John's:
 				<ul class="mt-2 list-disc list-inside text-primary-700">
 					<li>Confederation Hill DGC</li>
 					<li>McNiven DiscGolfPark</li>
@@ -114,19 +125,16 @@ const pdgaDiscountCode = '268_EAFF';
 	</section>
 
 	<section class="bg-white p-8 rounded-lg shadow-md border border-primary-100">
-		<h2 class="text-3xl font-bold text-primary-700 mb-4">Thank You</h2>
+		<h2 class="text-3xl font-bold text-primary-700 mb-4">Need Help?</h2>
 		<p class="text-primary-700 mb-4">
-			Thank you again for supporting ADG and becoming a member of our growing community.
-			Please feel free to reach out by email, through our website, or on any of our socials.
+			Thanks for supporting ADG and helping grow disc golf on the Avalon.
+			If you have questions about membership, tags, leagues, or events, reach out any time.
 		</p>
-		<p class="text-primary-700 mb-3">Looking forward to seeing you on the courses,</p>
-		<p class="text-primary-800 font-semibold mb-1">Ed Hartling</p>
-		<p class="text-primary-700 mb-5">President - Avalon Disc Golfers</p>
 		<a
 			href="mailto:avalondiscgolfers@gmail.com"
 			class="inline-flex items-center gap-2 bg-primary-600 text-white py-2 px-5 rounded-md hover:bg-primary-700 transition-colors"
 		>
-			Email ADG
+			Contact ADG
 			<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 				<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
 			</svg>
