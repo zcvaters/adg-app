@@ -1,20 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+const membershipYear = new Date().getFullYear();
 const contactEmail = 'avalondiscgolfers@gmail.com';
+const membershipAmount = '$25 CAD';
+const paymentMemoTemplate = `${membershipYear} ADG Membership - Full Name`;
+const paymentMethod = 'Interac e-Transfer';
+const autoDepositNote = 'Autodeposit is enabled, so no security question is needed.';
+const lastUpdatedText = 'February 16, 2026';
 
 const memberBenefits = [
-	'2026 ADG member leather etched velcro bag patch',
+	`${membershipYear} ADG member leather etched velcro bag patch`,
 	'Voting rights in annual AGM (DGNL and ADG)',
 	'Disc Golf NL (DGNL) membership',
 	'Eligibility for Provincial Championships',
-	'2026 DGNL bag tag'
+	`${membershipYear} DGNL bag tag`
 ];
 ---
 
 <Layout
 	title="Join Avalon Disc Golfers Today"
-	description="Become an ADG member in 2026 for $25/year and receive DGNL membership, voting rights, and more."
+	description={`Become an ADG member in ${membershipYear} for $25/year and receive DGNL membership, voting rights, and more.`}
 >
 	<div class="relative text-center mb-12 py-14 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden">
 		<div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-10">
@@ -27,6 +33,9 @@ const memberBenefits = [
 		<p class="text-lg md:text-xl text-primary-600 max-w-3xl mx-auto px-4 mb-0">
 			Whether you are a seasoned pro or a beginner, we welcome you to join our community and take your game to the next level.
 		</p>
+		<p class="text-sm text-primary-700 mt-4 mb-0">
+			Last updated: <strong>{lastUpdatedText}</strong>
+		</p>
 	</div>
 
 	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
@@ -35,20 +44,20 @@ const memberBenefits = [
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
 				<h3 class="text-xl font-semibold text-primary-700 mb-3">Membership Cost</h3>
 				<p class="text-primary-700 mb-0">
-					<strong>$25/year</strong> for ADG membership.
+					<strong>{membershipAmount}/year</strong> for ADG membership.
 				</p>
 			</article>
 
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
 				<h3 class="text-xl font-semibold text-primary-700 mb-3">How to Pay</h3>
 				<p class="text-primary-700 mb-4">
-					Send your e-transfer to:
+					Pay by {paymentMethod} in about a minute.
 				</p>
 				<a
-					href={`mailto:${contactEmail}`}
+					href="#etransfer-details"
 					class="inline-flex items-center gap-2 bg-primary-600 text-white py-2 px-5 rounded-md hover:bg-primary-700 transition-colors"
 				>
-					{contactEmail}
+					See Quick Payment Details
 				</a>
 			</article>
 
@@ -59,6 +68,72 @@ const memberBenefits = [
 				</p>
 			</article>
 		</div>
+	</section>
+
+	<section
+		id="etransfer-details"
+		class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100"
+		data-etransfer-panel
+	>
+		<h2 class="text-3xl font-bold text-primary-700 mb-4">Quick E-Transfer Details</h2>
+		<p class="text-primary-700 mb-6">
+			Thanks for joining ADG. Copy these details into your banking app and you are all set.
+		</p>
+
+		<div class="grid md:grid-cols-3 gap-4 mb-6">
+			<article class="bg-primary-50 border border-primary-100 rounded-lg p-4">
+				<p class="text-sm uppercase tracking-wide text-primary-600 mb-2">Recipient Email</p>
+				<p class="font-semibold text-primary-700 break-all mb-3">{contactEmail}</p>
+				<button
+					type="button"
+					data-copy-button
+					data-copy-value={contactEmail}
+					data-copy-label="Email"
+					class="text-sm font-semibold bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 transition-colors"
+				>
+					Copy Email
+				</button>
+			</article>
+
+			<article class="bg-primary-50 border border-primary-100 rounded-lg p-4">
+				<p class="text-sm uppercase tracking-wide text-primary-600 mb-2">Amount</p>
+				<p class="font-semibold text-primary-700 mb-3">{membershipAmount}</p>
+				<button
+					type="button"
+					data-copy-button
+					data-copy-value={membershipAmount}
+					data-copy-label="Amount"
+					class="text-sm font-semibold bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 transition-colors"
+				>
+					Copy Amount
+				</button>
+			</article>
+
+			<article class="bg-primary-50 border border-primary-100 rounded-lg p-4">
+				<p class="text-sm uppercase tracking-wide text-primary-600 mb-2">Memo</p>
+				<p class="font-semibold text-primary-700 mb-3">{paymentMemoTemplate}</p>
+				<button
+					type="button"
+					data-copy-button
+					data-copy-value={paymentMemoTemplate}
+					data-copy-label="Memo"
+					class="text-sm font-semibold bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 transition-colors"
+				>
+					Copy Memo
+				</button>
+			</article>
+		</div>
+
+		<ol class="list-decimal list-inside space-y-2 text-primary-700 mb-4">
+			<li>Open your bank app and start an Interac e-Transfer.</li>
+			<li>Paste the recipient email and amount above.</li>
+			<li>Use the memo template and replace "Full Name" with your name.</li>
+			<li>Send the transfer and keep your confirmation for your records.</li>
+		</ol>
+		<p class="text-primary-700 mb-3">{autoDepositNote}</p>
+		<p class="text-sm text-primary-700 mb-0" data-copy-status role="status" aria-live="polite">
+			Tip: use the copy buttons above to make payment setup faster.
+		</p>
 	</section>
 
 	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
@@ -87,4 +162,59 @@ const memberBenefits = [
 			</svg>
 		</a>
 	</section>
+
+	<script>
+	(() => {
+		const panel = document.querySelector('[data-etransfer-panel]');
+		if (!panel) return;
+
+		const buttons = panel.querySelectorAll<HTMLButtonElement>('[data-copy-button]');
+		const status = panel.querySelector<HTMLElement>('[data-copy-status]');
+		if (!buttons.length || !status) return;
+
+		const setStatus = (message: string) => {
+			status.textContent = message;
+		};
+
+		const copyText = async (value: string): Promise<boolean> => {
+			if (!value) return false;
+
+			if (navigator.clipboard?.writeText) {
+				try {
+					await navigator.clipboard.writeText(value);
+					return true;
+				} catch {
+					// Fallback below for older browsers.
+				}
+			}
+
+			const helper = document.createElement('textarea');
+			helper.value = value;
+			helper.setAttribute('readonly', '');
+			helper.style.position = 'fixed';
+			helper.style.opacity = '0';
+			helper.style.pointerEvents = 'none';
+			document.body.appendChild(helper);
+			helper.focus();
+			helper.select();
+			const succeeded = document.execCommand('copy');
+			document.body.removeChild(helper);
+			return succeeded;
+		};
+
+		buttons.forEach((button) => {
+			button.addEventListener('click', async () => {
+				const value = button.getAttribute('data-copy-value') ?? '';
+				const label = button.getAttribute('data-copy-label') ?? 'Value';
+				const copied = await copyText(value);
+
+				if (copied) {
+					setStatus(`${label} copied to clipboard.`);
+				} else {
+					setStatus(`Could not copy ${label.toLowerCase()}. Please copy it manually.`);
+				}
+			});
+		});
+	})();
+	</script>
 </Layout>
