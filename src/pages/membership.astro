@@ -1,16 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pdgaMembershipUrl = 'https://www.pdga.com/membership';
-const pdgaRulesUrl = 'https://www.pdga.com/rules/official-rules-disc-golf';
-const pdgaRulesSchoolUrl = 'https://www.pdga.com/rules/schools';
-const udiscUrl = 'https://udisc.com';
-const pdgaDiscountCode = '268_EAFF';
+const contactEmail = 'avalondiscgolfers@gmail.com';
+
+const memberBenefits = [
+	'2026 ADG member leather etched velcro bag patch',
+	'Voting rights in annual AGM (DGNL and ADG)',
+	'Disc Golf NL (DGNL) membership',
+	'Eligibility for Provincial Championships',
+	'2026 DGNL bag tag'
+];
 ---
 
 <Layout
-	title="ADG Membership Guide 2026"
-	description="Your ADG 2026 membership guide: benefits, PDGA discount details, bag tag rules, and key resources for playing in Newfoundland and Labrador."
+	title="Join Avalon Disc Golfers Today"
+	description="Become an ADG member in 2026 for $25/year and receive DGNL membership, voting rights, and more."
 >
 	<div class="relative text-center mb-12 py-14 bg-gradient-to-b from-primary-100 to-bg-primary rounded-lg overflow-hidden">
 		<div class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 opacity-10">
@@ -19,9 +23,9 @@ const pdgaDiscountCode = '268_EAFF';
 				<circle cx="12" cy="12" r="3"/>
 			</svg>
 		</div>
-		<h1 class="text-4xl md:text-5xl font-bold text-primary-700 mb-4">ADG Membership Guide 2026</h1>
+		<h1 class="text-4xl md:text-5xl font-bold text-primary-700 mb-4">Join Avalon Disc Golfers Today</h1>
 		<p class="text-lg md:text-xl text-primary-600 max-w-3xl mx-auto px-4 mb-0">
-			Everything you need in one place: benefits, bag tag rules, and key links for the season.
+			Whether you are a seasoned pro or a beginner, we welcome you to join our community and take your game to the next level.
 		</p>
 	</div>
 
@@ -29,35 +33,29 @@ const pdgaDiscountCode = '268_EAFF';
 		<h2 class="text-3xl font-bold text-primary-700 mb-6">At a Glance</h2>
 		<div class="grid md:grid-cols-3 gap-6">
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">AGM Access</h3>
+				<h3 class="text-xl font-semibold text-primary-700 mb-3">Membership Cost</h3>
 				<p class="text-primary-700 mb-0">
-					Attend, vote, and run for board positions at the annual ADG AGM.
+					<strong>$25/year</strong> for ADG membership.
 				</p>
 			</article>
 
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">PDGA Discount</h3>
+				<h3 class="text-xl font-semibold text-primary-700 mb-3">How to Pay</h3>
 				<p class="text-primary-700 mb-4">
-					Use code <code class="font-semibold text-primary-800">{pdgaDiscountCode}</code> for
-					<code class="font-semibold text-primary-800">$5 USD off</code> PDGA membership.
+					Send your e-transfer to:
 				</p>
 				<a
-					href={pdgaMembershipUrl}
-					target="_blank"
-					rel="noopener noreferrer"
+					href={`mailto:${contactEmail}`}
 					class="inline-flex items-center gap-2 bg-primary-600 text-white py-2 px-5 rounded-md hover:bg-primary-700 transition-colors"
 				>
-					Join PDGA
-					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17 17 7M9 7h8v8"/>
-					</svg>
+					{contactEmail}
 				</a>
 			</article>
 
 			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">Two Wooden Tags</h3>
+				<h3 class="text-xl font-semibold text-primary-700 mb-3">Who Can Join</h3>
 				<p class="text-primary-700 mb-0">
-					You receive one ADG tag and one DGNL tag for season-long tag play.
+					All skill levels are welcome, from first-time players to experienced competitors.
 				</p>
 			</article>
 		</div>
@@ -66,75 +64,24 @@ const pdgaDiscountCode = '268_EAFF';
 	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
 		<h2 class="text-3xl font-bold text-primary-700 mb-4">Membership Benefits</h2>
 		<ul class="list-disc list-inside space-y-3 text-primary-700">
-			<li>Participate in ADG governance at the annual AGM (typically late in the year).</li>
-			<li>Receive AGM notice at least four weeks before the meeting date.</li>
-			<li>Use the PDGA affiliate discount through DGNL at checkout.</li>
-			<li>Compete with ADG and DGNL wooden bag tags through league, tournament, and casual rounds.</li>
+			{memberBenefits.map((benefit) => <li>{benefit}</li>)}
 		</ul>
-	</section>
-
-	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
-		<h2 class="text-3xl font-bold text-primary-700 mb-6">Bag Tag Rules</h2>
-
-		<div class="grid md:grid-cols-2 gap-6">
-			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">ADG Tags</h3>
-				<ul class="list-disc list-inside space-y-2 text-primary-700 mb-0">
-					<li>Turn tags in at the start of league and tournament rounds.</li>
-					<li>Tags are redistributed by overall stroke score, regardless of division.</li>
-					<li>Lowest score receives the lowest tag number (#1 is best).</li>
-					<li>Top five tags must be defended in a reasonable timeframe or returned to the pool.</li>
-					<li>Casual tag rounds are encouraged, but official event tags follow leaderboard results.</li>
-				</ul>
-			</article>
-
-			<article class="bg-primary-50 border border-primary-100 rounded-lg p-6">
-				<h3 class="text-xl font-semibold text-primary-700 mb-3">DGNL Tags</h3>
-				<ul class="list-disc list-inside space-y-2 text-primary-700 mb-0">
-					<li>Tags are numbered and issued at random.</li>
-					<li>Any round can be a tag round when both DGNL members agree before tee-off.</li>
-					<li>The lower score takes the lower tag number.</li>
-					<li>League and tournament rounds are automatically tag rounds.</li>
-				</ul>
-			</article>
-		</div>
-	</section>
-
-	<section class="mb-12 bg-white p-8 rounded-lg shadow-md border border-primary-100">
-		<h2 class="text-3xl font-bold text-primary-700 mb-6">Rules, Tools, and Local Courses</h2>
-		<ul class="space-y-5 text-primary-700">
-			<li>
-				<strong>PDGA Rules:</strong> Members are expected to follow the PDGA Official Rules of Disc Golf. Review the
-				<a href={pdgaRulesUrl} target="_blank" rel="noopener noreferrer">PDGA Official Rules</a>
-				or take
-				<a href={pdgaRulesSchoolUrl} target="_blank" rel="noopener noreferrer">PDGA Rules School</a>.
-			</li>
-			<li>
-				<strong>UDisc:</strong> Most local players use
-				<a href={udiscUrl} target="_blank" rel="noopener noreferrer">UDisc</a>
-				to track rounds, locate courses, and find league and tournament listings.
-			</li>
-			<li>
-				<strong>Avalon Courses:</strong> Our region is growing. Current courses in St. John's:
-				<ul class="mt-2 list-disc list-inside text-primary-700">
-					<li>Confederation Hill DGC</li>
-					<li>McNiven DiscGolfPark</li>
-				</ul>
-			</li>
-		</ul>
+		<p class="text-primary-700 mt-4 mb-0">
+			Use your ADG membership to connect with the local community, support course growth, and access competitive opportunities across the province.
+		</p>
 	</section>
 
 	<section class="bg-white p-8 rounded-lg shadow-md border border-primary-100">
-		<h2 class="text-3xl font-bold text-primary-700 mb-4">Need Help?</h2>
+		<h2 class="text-3xl font-bold text-primary-700 mb-4">Membership Support</h2>
 		<p class="text-primary-700 mb-4">
-			Thanks for supporting ADG and helping grow disc golf on the Avalon.
-			If you have questions about membership, tags, leagues, or events, reach out any time.
+			Membership fees are used to aid regular course maintenance, hold events, and promote the sport locally.
+			Questions about joining or payment? Reach out by email any time.
 		</p>
 		<a
-			href="mailto:avalondiscgolfers@gmail.com"
+			href={`mailto:${contactEmail}`}
 			class="inline-flex items-center gap-2 bg-primary-600 text-white py-2 px-5 rounded-md hover:bg-primary-700 transition-colors"
 		>
-			Contact ADG
+			Email ADG
 			<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 				<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
 			</svg>
